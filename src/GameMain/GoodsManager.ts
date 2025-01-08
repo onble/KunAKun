@@ -38,7 +38,7 @@ export class GoodsManager extends Laya.Script {
             }
             console.log(this._goodsList);
         }
-        this._draw();
+        this._Level1Show();
     }
 
     //组件被启用后执行，例如节点被添加到舞台后
@@ -97,6 +97,78 @@ export class GoodsManager extends Laya.Script {
                 });
                 this.owner.addChild(newCard);
             }
+        }
+    }
+    private _Level1Show() {
+        // 清除上次渲染的
+        this.owner.removeChildren(0, this.owner.numChildren);
+        for (let i = 0; i < this._goodsList.length; i++) {
+            // 记录每一层的数据
+            let indexGoods = this._goodsList[i];
+            // 首先对数据进行排序，靠下靠左的先出发
+            indexGoods.sort((a, b) => {
+                if (a.y > b.y) {
+                    return -1;
+                } else if (a.y < b.y) {
+                    return 1;
+                } else {
+                    if (a.x > b.x) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                }
+            });
+            let tempIndex = 0;
+            const showOneCard = (index: number) => {
+                const goods = indexGoods[index];
+                // 绘制卡片
+                const newCard = new Laya.Sprite();
+                newCard.x = goods.x;
+                newCard.y = -goods.height;
+                newCard.width = goods.width;
+                newCard.height = goods.height;
+                newCard.loadImage(`./resources/images/GameMain/${goods.name}.png`);
+                newCard.name = goods.name;
+                this.owner.addChild(newCard);
+                Laya.Tween.to(
+                    newCard,
+                    { y: goods.y },
+                    150,
+                    null,
+                    Laya.Handler.create(this, () => {
+                        if (!goods.canClick) {
+                            // 如果不能点击，就增加阴影
+                            const shadow = new Laya.Sprite();
+                            shadow.name = "shadow";
+                            shadow.width = goods.width;
+                            shadow.height = goods.height;
+                            shadow.loadImage(`./resources/images/GameMain/shadow.png`);
+                            newCard.addChild(shadow);
+                        }
+                        newCard.on(Laya.Event.CLICK, (event: Laya.Event) => {
+                            if (!goods.canClick) {
+                                return;
+                            } else {
+                                event.stopPropagation();
+                            }
+                            // 将自己从列表中删除
+                            this._goodsList[i].splice(index, 1);
+                            // 将信息通知给盒子管理器
+                            if (this._BoxManger.addGoods(goods)) {
+                                this._showCoverGoods(goods, [i, index]);
+                            }
+                            this._draw();
+                        });
+                        // 让下一个动画出发
+                        tempIndex++;
+                        if (tempIndex < indexGoods.length) {
+                            showOneCard(tempIndex);
+                        }
+                    })
+                );
+            };
+            showOneCard(tempIndex);
         }
     }
     private _showCoverGoods(selectGoods: Good, index: number[]) {
