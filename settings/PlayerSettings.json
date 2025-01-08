@@ -1,8 +1,7 @@
 {
   "resolution": {
-    "designWidth": 750,
-    "designHeight": 1334,
-    "scaleMode": "fixedwidth"
+    "designWidth": 460,
+    "designHeight": 800
   },
   "3D": {
     "lightClusterCount": {

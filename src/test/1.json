@@ -1,0 +1,28 @@
+{
+    "respCode": "1000",
+    "respMsg": "成功",
+    "goodArray": {
+        "1": [
+            { "name": "corn", "width": 60, "height": 66, "x": 70, "y": 100, "canClick": false },
+            { "name": "corn", "width": 60, "height": 66, "x": 200, "y": 100, "canClick": false },
+            { "name": "corn", "width": 60, "height": 66, "x": 330, "y": 100, "canClick": false },
+            { "name": "corn", "width": 60, "height": 66, "x": 70, "y": 220, "canClick": false },
+            { "name": "carrot", "width": 60, "height": 66, "x": 200, "y": 220, "canClick": false },
+            { "name": "corn", "width": 60, "height": 66, "x": 330, "y": 220, "canClick": false },
+            { "name": "carrot", "width": 60, "height": 66, "x": 70, "y": 340, "canClick": false },
+            { "name": "carrot", "width": 60, "height": 66, "x": 200, "y": 340, "canClick": false },
+            { "name": "corn", "width": 60, "height": 66, "x": 330, "y": 340, "canClick": false }
+        ],
+        "2": [
+            { "name": "grass", "width": 60, "height": 66, "x": 70, "y": 130, "canClick": true },
+            { "name": "grass", "width": 60, "height": 66, "x": 70, "y": 250, "canClick": true },
+            { "name": "grass", "width": 60, "height": 66, "x": 70, "y": 350, "canClick": true },
+            { "name": "carrot", "width": 60, "height": 66, "x": 200, "y": 130, "canClick": true },
+            { "name": "grass", "width": 60, "height": 66, "x": 200, "y": 250, "canClick": true },
+            { "name": "grass", "width": 60, "height": 66, "x": 200, "y": 350, "canClick": true },
+            { "name": "carrot", "width": 60, "height": 66, "x": 330, "y": 130, "canClick": true },
+            { "name": "grass", "width": 60, "height": 66, "x": 330, "y": 250, "canClick": true },
+            { "name": "carrot", "width": 60, "height": 66, "x": 330, "y": 350, "canClick": true }
+        ]
+    }
+}
