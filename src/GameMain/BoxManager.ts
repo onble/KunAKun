@@ -12,6 +12,7 @@ export class BoxManager extends Laya.Script {
     private _Choose: Laya.List;
     /** 控制消除物品的管理类 */
     private _GoodsManager: GoodsManager;
+    private _Choosed: Laya.Sprite;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
@@ -21,6 +22,7 @@ export class BoxManager extends Laya.Script {
         const Goods = (Background.getChildByName("Goods") as Laya.Box) || Assert.ChildNotNull;
         this._GoodsManager = Goods.getComponent(GoodsManager) || Assert.ChildNotNull;
         this._Choose = (this.owner.getChildByName("Choose") as Laya.List) || Assert.ChildNotNull;
+        this._Choosed = (this.owner.getChildByName("Choosed") as Laya.Sprite) || Assert.ChildNotNull;
         this._updateRenderArray();
         this._Choose.renderHandler = new Laya.Handler(this, (item: Laya.Sprite, index: number) => {
             const goods = this._boxList[index];
@@ -35,15 +37,83 @@ export class BoxManager extends Laya.Script {
         this._Choose.array = this._boxList;
     }
 
-    public addGoods(goods: good): boolean {
+    public addGoods(goods: good): void {
+        console.log("addGoods", goods);
         if (this._boxList.length > 6) {
             alert("超过指定数量");
-            return false;
+            // TODO:直接进行失败处理
+            // return false;
         } else {
-            this._boxList.push(goods);
-            this._updateRenderArray();
-            this._clearSame();
-            return true;
+            let count = 0;
+            let pushIndex = 0;
+            // 在存储的数据中找看是否有相同的卡牌
+            for (let i = 0; i < this._boxList.length; i++) {
+                if (this._boxList[i].name === goods.name) {
+                    count++;
+                    pushIndex = i + 1;
+                }
+            }
+            // 创建一个新的卡牌，然后移动到木栏中
+            const newGood = new Laya.Sprite();
+            newGood.x = goods.x;
+            newGood.y = goods.y;
+            // newGood.y = 563;
+            newGood.width = goods.width;
+            newGood.height = goods.height;
+            newGood.loadImage(`./resources/images/GameMain/${goods.name}.png`);
+            this._Choosed.addChild(newGood);
+            switch (count) {
+                case 0:
+                    this._boxList.push(goods);
+                    newGood.name = `${goods.name}1`;
+                    pushIndex = this._boxList.length - 1;
+                    break;
+                case 1:
+                    console.log("pushIndex - 1", pushIndex - 1);
+                    console.log(
+                        "x:",
+                        ((this._Choosed.getChildByName(`${goods.name}1`) as Laya.Sprite) || Assert.ChildNotNull).x + 60
+                    );
+                    this._boxList.splice(pushIndex, 0, goods);
+                    newGood.name = `${goods.name}2`;
+                    break;
+                case 2:
+                    this._boxList.splice(pushIndex, 0, goods);
+                    newGood.name = `${goods.name}3`;
+                    break;
+                default:
+                    console.warn("异常数据");
+            }
+
+            Laya.Tween.to(
+                newGood,
+                { x: 21 + 60 * pushIndex, y: 563 },
+                200,
+                null,
+                new Laya.Handler(this, () => {
+                    if (count == 2) {
+                        // TODO:执行消除的逻辑
+                    }
+                })
+            );
+            // 将右边的卡牌进行向右移动
+            for (let i = this._boxList.length - 1; i > pushIndex; i--) {
+                let rightItem: Laya.Sprite = null;
+                if (i - 1 >= 0 && this._boxList[i - 1].name === this._boxList[i].name) {
+                    rightItem =
+                        (this._Choosed.getChildByName(`${this._boxList[i].name}2`) as Laya.Sprite) ||
+                        Assert.ChildNotNull;
+                } else {
+                    rightItem =
+                        (this._Choosed.getChildByName(`${this._boxList[i].name}1`) as Laya.Sprite) ||
+                        Assert.ChildNotNull;
+                }
+                Laya.Tween.to(rightItem, { x: rightItem.x + 60 }, 100);
+            }
+            // this._boxList.push(goods);
+            // this._updateRenderArray();
+            // this._clearSame();
+            // return true;
         }
     }
     private _clearSame() {

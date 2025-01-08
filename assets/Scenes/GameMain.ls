@@ -111,7 +111,7 @@
           "_$type": "Box",
           "name": "Goods",
           "width": 457,
-          "height": 457,
+          "height": 672,
           "_$comp": [
             {
               "_$type": "7e1b6e8b-b28e-4b62-a103-f3184eee9224",
@@ -237,23 +237,11 @@
           "_$id": "b95a0s3u",
           "_$type": "Sprite",
           "name": "Box",
-          "x": 21,
-          "y": 576,
-          "width": 420,
-          "height": 70,
+          "width": 457,
+          "height": 672,
           "_mouseState": 2,
-          "_gcmds": [
-            {
-              "_$type": "DrawRectCmd",
-              "x": 0,
-              "y": 0,
-              "width": 1,
-              "height": 1,
-              "percent": true,
-              "lineWidth": 4,
-              "lineColor": "rgba(255, 255, 255, 1)"
-            }
-          ],
+          "mouseThrough": true,
+          "_gcmds": [],
           "_$comp": [
             {
               "_$type": "37b70b97-ca88-4413-bceb-388360be6e1e",
@@ -265,8 +253,8 @@
               "_$id": "5ij8qi49",
               "_$type": "Image",
               "name": "Background",
-              "x": -24.99999999999995,
-              "y": -35,
+              "x": -7,
+              "y": 528,
               "width": 470.0420394047194,
               "height": 150.28995897749124,
               "skin": "res://b377d643-bbd9-48cc-a07f-10ba0d4650de",
@@ -276,6 +264,8 @@
               "_$id": "bq2qzili",
               "_$type": "List",
               "name": "Choose",
+              "x": 18,
+              "y": 563,
               "width": 420,
               "height": 66,
               "_mouseState": 2,
@@ -298,6 +288,13 @@
                   }
                 }
               ]
+            },
+            {
+              "_$id": "5gs445yx",
+              "_$type": "Sprite",
+              "name": "Choosed",
+              "width": 457,
+              "height": 672
             }
           ]
         },

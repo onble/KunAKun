@@ -81,7 +81,6 @@ export class GoodsManager extends Laya.Script {
                     newCard.addChild(shadow);
                 }
                 newCard.on(Laya.Event.CLICK, (event: Laya.Event) => {
-                    console.log("here");
                     if (!goods.canClick) {
                         return;
                     } else {
@@ -90,9 +89,8 @@ export class GoodsManager extends Laya.Script {
                     // 将自己从列表中删除
                     this._goodsList[i].splice(j, 1);
                     // 将信息通知给盒子管理器
-                    if (this._BoxManger.addGoods(goods)) {
-                        this._showCoverGoods(goods, [i, j]);
-                    }
+                    this._BoxManger.addGoods(goods);
+                    this._showCoverGoods(goods, [i, j]);
                     this._draw();
                 });
                 this.owner.addChild(newCard);
@@ -130,6 +128,7 @@ export class GoodsManager extends Laya.Script {
                 newCard.height = goods.height;
                 newCard.loadImage(`./resources/images/GameMain/${goods.name}.png`);
                 newCard.name = goods.name;
+                newCard.zOrder = i;
                 this.owner.addChild(newCard);
                 Laya.Tween.to(
                     newCard,
@@ -144,7 +143,9 @@ export class GoodsManager extends Laya.Script {
                             shadow.width = goods.width;
                             shadow.height = goods.height;
                             shadow.loadImage(`./resources/images/GameMain/shadow.png`);
+                            shadow.alpha = 0;
                             newCard.addChild(shadow);
+                            Laya.Tween.to(shadow, { alpha: 1 }, 200);
                         }
                         newCard.on(Laya.Event.CLICK, (event: Laya.Event) => {
                             if (!goods.canClick) {
@@ -155,9 +156,8 @@ export class GoodsManager extends Laya.Script {
                             // 将自己从列表中删除
                             this._goodsList[i].splice(index, 1);
                             // 将信息通知给盒子管理器
-                            if (this._BoxManger.addGoods(goods)) {
-                                this._showCoverGoods(goods, [i, index]);
-                            }
+                            this._BoxManger.addGoods(goods);
+                            this._showCoverGoods(goods, [i, index]);
                             this._draw();
                         });
                         // 让下一个动画出发
