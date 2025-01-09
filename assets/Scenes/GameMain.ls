@@ -268,6 +268,7 @@
               "y": 563,
               "width": 420,
               "height": 66,
+              "visible": false,
               "_mouseState": 2,
               "itemTemplate": {
                 "_$ref": "xh79ify6",
@@ -364,6 +365,286 @@
                       "leading": 2
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_$id": "c933168f",
+          "_$type": "Sprite",
+          "name": "displayAnimation",
+          "x": 19,
+          "y": 563,
+          "width": 180,
+          "height": 66,
+          "_$comp": [
+            {
+              "_$type": "7c090f17-3a0c-4b3e-b800-c0e11f8d0e66",
+              "scriptPath": "../src/GameMain/DisappearAnimation.ts"
+            }
+          ],
+          "_$child": [
+            {
+              "_$id": "ebi84zod",
+              "_$type": "Sprite",
+              "name": "Card1",
+              "width": 60,
+              "height": 66,
+              "_$child": [
+                {
+                  "_$id": "jpxt8wwu",
+                  "_$type": "Image",
+                  "name": "Star1",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 35,
+                  "height": 35,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "38ieseu3",
+                  "_$type": "Image",
+                  "name": "Star2",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 35,
+                  "height": 35,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "tyds3ze4",
+                  "_$type": "Image",
+                  "name": "Star3",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 35,
+                  "height": 35,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "h20nnzl8",
+                  "_$type": "Image",
+                  "name": "Star4",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 35,
+                  "height": 35,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "mbi56dpg",
+                  "_$type": "Image",
+                  "name": "Star5",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 35,
+                  "height": 35,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "yb5m3t6v",
+                  "_$type": "Image",
+                  "name": "Star6",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 35,
+                  "height": 35,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                }
+              ]
+            },
+            {
+              "_$id": "8nkh2233",
+              "_$type": "Sprite",
+              "name": "Card2",
+              "x": 60,
+              "width": 60,
+              "height": 66,
+              "_$child": [
+                {
+                  "_$id": "otertdhe",
+                  "_$type": "Image",
+                  "name": "Star1",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 27,
+                  "height": 27,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "7spdqh07",
+                  "_$type": "Image",
+                  "name": "Star2",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 27,
+                  "height": 27,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "u6g5zx23",
+                  "_$type": "Image",
+                  "name": "Star3",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 27,
+                  "height": 27,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "dj9v4nrn",
+                  "_$type": "Image",
+                  "name": "Star4",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 27,
+                  "height": 27,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "6rf6ojyc",
+                  "_$type": "Image",
+                  "name": "Star5",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 27,
+                  "height": 27,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "9isfdp0l",
+                  "_$type": "Image",
+                  "name": "Star6",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 27,
+                  "height": 27,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                }
+              ]
+            },
+            {
+              "_$id": "pqmyxc6u",
+              "_$type": "Sprite",
+              "name": "Card3",
+              "x": 120,
+              "width": 60,
+              "height": 66,
+              "_$child": [
+                {
+                  "_$id": "ateu1ni6",
+                  "_$type": "Image",
+                  "name": "Star1",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 35,
+                  "height": 35,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "4vw0gb99",
+                  "_$type": "Image",
+                  "name": "Star2",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 35,
+                  "height": 35,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "2h8v62mn",
+                  "_$type": "Image",
+                  "name": "Star3",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 35,
+                  "height": 35,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "7tib6vol",
+                  "_$type": "Image",
+                  "name": "Star4",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 35,
+                  "height": 35,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "sy450024",
+                  "_$type": "Image",
+                  "name": "Star5",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 35,
+                  "height": 35,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "j5vp2gzl",
+                  "_$type": "Image",
+                  "name": "Star6",
+                  "x": 29.999999999999986,
+                  "y": 30.428367362852327,
+                  "width": 35,
+                  "height": 35,
+                  "anchorX": 0.5,
+                  "anchorY": 0.5,
+                  "skin": "res://f741f749-bd3d-49a0-81b4-31aa0db81758",
+                  "color": "#ffffff"
                 }
               ]
             }
