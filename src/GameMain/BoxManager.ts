@@ -1,4 +1,5 @@
 import { Assert } from "../utils/Assert";
+import { DisappearAnimation } from "./DisappearAnimation";
 import { GoodsManager } from "./GoodsManager";
 import { good } from "./type";
 
@@ -9,7 +10,6 @@ export class BoxManager extends Laya.Script {
     declare owner: Laya.Sprite;
     /** 用于存储记录盒子中的卡片数据 */
     private _boxList: good[] = [];
-    private _Choose: Laya.List;
     /** 控制消除物品的管理类 */
     private _GoodsManager: GoodsManager;
     private _Choosed: Laya.Sprite;
@@ -21,20 +21,7 @@ export class BoxManager extends Laya.Script {
         /** 待消除物品容器 */
         const Goods = (Background.getChildByName("Goods") as Laya.Box) || Assert.ChildNotNull;
         this._GoodsManager = Goods.getComponent(GoodsManager) || Assert.ChildNotNull;
-        this._Choose = (this.owner.getChildByName("Choose") as Laya.List) || Assert.ChildNotNull;
         this._Choosed = (this.owner.getChildByName("Choosed") as Laya.Sprite) || Assert.ChildNotNull;
-        this._updateRenderArray();
-        this._Choose.renderHandler = new Laya.Handler(this, (item: Laya.Sprite, index: number) => {
-            const goods = this._boxList[index];
-            if (!goods) {
-                return;
-            }
-            item.loadImage(`./resources/images/GameMain/${goods.name}.png`);
-        });
-    }
-    private _updateRenderArray() {
-        this._Choose.repeatX = this._boxList.length;
-        this._Choose.array = this._boxList;
     }
 
     public addGoods(goods: good): void {
@@ -69,11 +56,6 @@ export class BoxManager extends Laya.Script {
                     pushIndex = this._boxList.length - 1;
                     break;
                 case 1:
-                    console.log("pushIndex - 1", pushIndex - 1);
-                    console.log(
-                        "x:",
-                        ((this._Choosed.getChildByName(`${goods.name}1`) as Laya.Sprite) || Assert.ChildNotNull).x + 60
-                    );
                     this._boxList.splice(pushIndex, 0, goods);
                     newGood.name = `${goods.name}2`;
                     break;
@@ -92,7 +74,50 @@ export class BoxManager extends Laya.Script {
                 null,
                 new Laya.Handler(this, () => {
                     if (count == 2) {
-                        // TODO:执行消除的逻辑
+                        let card1 = this._Choosed.getChildByName(`${goods.name}1`) as Laya.Sprite;
+                        let card2 = this._Choosed.getChildByName(`${goods.name}2`) as Laya.Sprite;
+                        let card3 = this._Choosed.getChildByName(`${goods.name}3`) as Laya.Sprite;
+                        // 将相同的进行隐藏后移除
+                        card1.visible = false;
+                        card2.visible = false;
+                        card3.visible = false;
+                        // 将消除的动画进行播放
+                        Laya.loader.load("./prefabs/DisAppearAnimation.lh").then((res: Laya.Prefab) => {
+                            const DisappearAnimationSprite = res.create() as Laya.Sprite;
+                            this.owner.addChild(DisappearAnimationSprite);
+                            const DisappearAnimationControl =
+                                DisappearAnimationSprite.getComponent(DisappearAnimation) || Assert.ComponentNotNull;
+                            DisappearAnimationSprite.y = 563;
+                            DisappearAnimationControl.showDisappearAnimation(card1.x);
+                        });
+                        // 将右边的向左移动
+                        for (let i = this._boxList.length - 1; i > pushIndex - 2; i--) {
+                            let rightItem: Laya.Sprite = null;
+                            if (i - 1 >= 0 && this._boxList[i - 1].name === this._boxList[i].name) {
+                                rightItem =
+                                    (this._Choosed.getChildByName(`${this._boxList[i].name}2`) as Laya.Sprite) ||
+                                    Assert.ChildNotNull;
+                            } else {
+                                rightItem =
+                                    (this._Choosed.getChildByName(`${this._boxList[i].name}1`) as Laya.Sprite) ||
+                                    Assert.ChildNotNull;
+                            }
+                            Laya.Tween.to(
+                                rightItem,
+                                {},
+                                300,
+                                null,
+                                Laya.Handler.create(this, () => {
+                                    Laya.Tween.to(rightItem, { x: rightItem.x - 180 }, 100);
+                                })
+                            );
+                        }
+                        card1.removeSelf();
+                        card2.removeSelf();
+                        card3.removeSelf();
+                        this._boxList = this._boxList.filter((it: good) => {
+                            return it.name != goods.name;
+                        });
                     }
                 })
             );
@@ -110,36 +135,9 @@ export class BoxManager extends Laya.Script {
                 }
                 Laya.Tween.to(rightItem, { x: rightItem.x + 60 }, 100);
             }
-            // this._boxList.push(goods);
-            // this._updateRenderArray();
             // this._clearSame();
             // return true;
         }
-    }
-    private _clearSame() {
-        const boxArray: any = {};
-        // 判断篮子里的图片名字是否重合，重合+1，到3消除
-        this._boxList.forEach((it: good, index: number) => {
-            boxArray[it.name] = boxArray[it.name] ? boxArray[it.name] + 1 : 1;
-        });
-        // 消除目标
-        let target: string;
-        for (let item in boxArray) {
-            if (boxArray[item] == 3) {
-                target = item;
-                this._boxList = this._boxList.filter((it: good) => {
-                    return it.name != item;
-                });
-                this._updateRenderArray();
-                // 判断是否完成游戏
-                if (this._boxList.length === 0 && this._GoodsManager.goodsClear()) {
-                    setTimeout(() => {
-                        alert("you win");
-                    }, 500);
-                }
-            }
-        }
-        console.log("消除", target);
     }
     //组件被启用后执行，例如节点被添加到舞台后
     //onEnable(): void {}

@@ -5,17 +5,38 @@ const { regClass, property } = Laya;
 @regClass()
 export class DisappearAnimation extends Laya.Script {
     declare owner: Laya.Sprite;
+    private _Card1: Laya.Sprite;
+    private _Card2: Laya.Sprite;
+    private _Card3: Laya.Sprite;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
-        const Card1 = (this.owner.getChildByName("Card1") as Laya.Sprite) || Assert.ChildNotNull;
-        const Card2 = (this.owner.getChildByName("Card2") as Laya.Sprite) || Assert.ChildNotNull;
-        const Card3 = (this.owner.getChildByName("Card3") as Laya.Sprite) || Assert.ChildNotNull;
-        this._showCardDisapperAnimation(Card1);
-        this._showCardDisapperAnimation(Card2);
-        this._showCardDisapperAnimation(Card3);
+        this._Card1 = (this.owner.getChildByName("Card1") as Laya.Sprite) || Assert.ChildNotNull;
+        this._Card2 = (this.owner.getChildByName("Card2") as Laya.Sprite) || Assert.ChildNotNull;
+        this._Card3 = (this.owner.getChildByName("Card3") as Laya.Sprite) || Assert.ChildNotNull;
     }
-    private _showCardDisapperAnimation(card: Laya.Sprite) {
+    public showDisappearAnimation(x: number, callBack?: Function) {
+        console.log("showDisappearAnimation x", x);
+        this.owner.x = x;
+        this.owner.visible = true;
+        this._showCardDisapperAnimation(this._Card1);
+        this._showCardDisapperAnimation(this._Card2);
+        this._showCardDisapperAnimation(this._Card3, () => {
+            callBack && callBack();
+        });
+    }
+    private _resetCard(card: Laya.Sprite) {
+        for (let i = 1; i <= 6; i++) {
+            const Star = (card.getChildByName("Star" + i) as Laya.Image) || Assert.ChildNotNull;
+            Star.alpha = 1;
+            Star.scaleX = 1;
+            Star.scaleY = 1;
+            Star.rotation = 0;
+            Star.x = 30;
+            Star.y = 30;
+        }
+    }
+    private _showCardDisapperAnimation(card: Laya.Sprite, callBack?: Function) {
         for (let i = 1; i <= 6; i++) {
             const Star = (card.getChildByName("Star" + i) as Laya.Image) || Assert.ChildNotNull;
             const randomAngle = Math.random() * 2 * Math.PI;
@@ -31,7 +52,9 @@ export class DisappearAnimation extends Laya.Script {
                 500,
                 null,
                 Laya.Handler.create(this, () => {
-                    // this.owner.removeSelf();
+                    if (i == 6) {
+                        callBack && callBack();
+                    }
                 })
             );
         }
