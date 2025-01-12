@@ -16,7 +16,6 @@ export class DisappearAnimation extends Laya.Script {
         this._Card3 = (this.owner.getChildByName("Card3") as Laya.Sprite) || Assert.ChildNotNull;
     }
     public showDisappearAnimation(x: number, callBack?: Function) {
-        console.log("showDisappearAnimation x", x);
         this.owner.x = x;
         this.owner.visible = true;
         this._showCardDisapperAnimation(this._Card1);

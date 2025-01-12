@@ -19,6 +19,13 @@
       "skin": "res://2700e4ae-a78d-48e8-ba28-9da71cd19136",
       "useSourceSize": true,
       "color": "#ffffff",
+      "_$comp": [
+        {
+          "_$type": "e9d6caa7-062a-40d7-b343-e6a16f5cb699",
+          "scriptPath": "../src/GameMain/GameMainManager.ts",
+          "text": ""
+        }
+      ],
       "_$child": [
         {
           "_$id": "kyqmkcd3",

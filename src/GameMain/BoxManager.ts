@@ -1,5 +1,6 @@
 import { Assert } from "../utils/Assert";
 import { DisappearAnimation } from "./DisappearAnimation";
+import { GameMainManager } from "./GameMainManager";
 import { GoodsManager } from "./GoodsManager";
 import { good } from "./type";
 
@@ -13,11 +14,13 @@ export class BoxManager extends Laya.Script {
     /** 控制消除物品的管理类 */
     private _GoodsManager: GoodsManager;
     private _Choosed: Laya.Sprite;
+    private _gameMainManager: GameMainManager;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
         /** 游戏背景底图 */
         const Background = (this.owner.parent as Laya.Image) || Assert.ChildNotNull;
+        this._gameMainManager = Background.getComponent(GameMainManager) || Assert.ComponentNotNull;
         /** 待消除物品容器 */
         const Goods = (Background.getChildByName("Goods") as Laya.Box) || Assert.ChildNotNull;
         this._GoodsManager = Goods.getComponent(GoodsManager) || Assert.ChildNotNull;
@@ -25,7 +28,6 @@ export class BoxManager extends Laya.Script {
     }
 
     public addGoods(goods: good): void {
-        console.log("addGoods", goods);
         if (this._boxList.length > 6) {
             alert("超过指定数量");
             // TODO:直接进行失败处理
@@ -118,6 +120,14 @@ export class BoxManager extends Laya.Script {
                         this._boxList = this._boxList.filter((it: good) => {
                             return it.name != goods.name;
                         });
+                        setTimeout(() => {
+                            // 判断是否完成游戏
+                            if (this._boxList.length == 0 && this._GoodsManager.goodsClear()) {
+                                // 通知游戏管理器进入下一关
+                                // alert("通关了");
+                                this._gameMainManager.nextLevel();
+                            }
+                        }, 500);
                     }
                 })
             );
@@ -135,8 +145,6 @@ export class BoxManager extends Laya.Script {
                 }
                 Laya.Tween.to(rightItem, { x: rightItem.x + 60 }, 100);
             }
-            // this._clearSame();
-            // return true;
         }
     }
     //组件被启用后执行，例如节点被添加到舞台后
