@@ -23,7 +23,7 @@ export class GoodsManager extends Laya.Script {
         const Box = (Background.getChildByName("Box") as Laya.Sprite) || Assert.ChildNotNull;
         this._BoxManger = Box.getComponent(BoxManager) || Assert.ComponentNotNull;
     }
-    public level2Show() {
+    public level2Show(callBack?: Function) {
         const jsonData =
             '{"respCode":"1000","respMsg":"成功","goodArray":{"1":[{"name":"book","width":60,"height":66,"x":80,"y":126,"canClick":false},{"name":"cabbage","width":60,"height":66,"x":140,"y":126,"canClick":false},{"name":"carrot","width":60,"height":66,"x":200,"y":126,"canClick":false},{"name":"chicken","width":60,"height":66,"x":260,"y":126,"canClick":false},{"name":"gift","width":60,"height":66,"x":320,"y":126,"canClick":false},{"name":"bee","width":60,"height":66,"x":80,"y":192,"canClick":false},{"name":"gift","width":60,"height":66,"x":140,"y":192,"canClick":false},{"name":"carrot","width":60,"height":66,"x":200,"y":192,"canClick":false},{"name":"chicken","width":60,"height":66,"x":260,"y":192,"canClick":false},{"name":"gift","width":60,"height":66,"x":320,"y":192,"canClick":false},{"name":"bee","width":60,"height":66,"x":80,"y":258,"canClick":false},{"name":"gift","width":60,"height":66,"x":140,"y":258,"canClick":false},{"name":"carrot","width":60,"height":66,"x":200,"y":258,"canClick":false},{"name":"chicken","width":60,"height":66,"x":260,"y":258,"canClick":false},{"name":"gift","width":60,"height":66,"x":320,"y":258,"canClick":false},{"name":"grass","width":60,"height":66,"x":80,"y":324,"canClick":false},{"name":"tree","width":60,"height":66,"x":140,"y":324,"canClick":false},{"name":"grass","width":60,"height":66,"x":200,"y":324,"canClick":false},{"name":"tree","width":60,"height":66,"x":260,"y":324,"canClick":false},{"name":"grass","width":60,"height":66,"x":320,"y":324,"canClick":false},{"name":"gift","width":60,"height":66,"x":60,"y":394,"canClick":false},{"name":"book","width":60,"height":66,"x":330,"y":394,"canClick":false}],"2":[{"name":"milk","width":60,"height":66,"x":110,"y":159,"canClick":false},{"name":"cabbage","width":60,"height":66,"x":170,"y":159,"canClick":false},{"name":"carrot","width":60,"height":66,"x":230,"y":159,"canClick":false},{"name":"chicken","width":60,"height":66,"x":290,"y":159,"canClick":false},{"name":"bee","width":60,"height":66,"x":110,"y":225,"canClick":false},{"name":"gift","width":60,"height":66,"x":170,"y":225,"canClick":false},{"name":"carrot","width":60,"height":66,"x":230,"y":225,"canClick":false},{"name":"chicken","width":60,"height":66,"x":290,"y":225,"canClick":false},{"name":"bee","width":60,"height":66,"x":110,"y":291,"canClick":false},{"name":"gift","width":60,"height":66,"x":170,"y":291,"canClick":false},{"name":"carrot","width":60,"height":66,"x":230,"y":291,"canClick":false},{"name":"chicken","width":60,"height":66,"x":290,"y":291,"canClick":false},{"name":"tree","width":60,"height":66,"x":60,"y":399,"canClick":false},{"name":"bee","width":60,"height":66,"x":330,"y":399,"canClick":false}],"3":[{"name":"milk","width":60,"height":66,"x":140,"y":192,"canClick":false},{"name":"cabbage","width":60,"height":66,"x":200,"y":192,"canClick":false},{"name":"carrot","width":60,"height":66,"x":260,"y":192,"canClick":false},{"name":"bee","width":60,"height":66,"x":140,"y":258,"canClick":false},{"name":"gift","width":60,"height":66,"x":200,"y":258,"canClick":false},{"name":"carrot","width":60,"height":66,"x":260,"y":258,"canClick":false},{"name":"book","width":60,"height":66,"x":60,"y":404,"canClick":false},{"name":"carrot","width":60,"height":66,"x":330,"y":404,"canClick":false}],"4":[{"name":"milk","width":60,"height":66,"x":170,"y":225,"canClick":true},{"name":"cabbage","width":60,"height":66,"x":230,"y":225,"canClick":true},{"name":"cabbage","width":60,"height":66,"x":60,"y":409,"canClick":true},{"name":"cabbage","width":60,"height":66,"x":330,"y":409,"canClick":true}]}}';
         /** 解析获得的json数据 */
@@ -39,11 +39,9 @@ export class GoodsManager extends Laya.Script {
         // 清除上次渲染的
         this.owner.removeChildren(0, this.owner.numChildren);
         const stageWidth = Laya.stage.width;
-        console.log("stageWidth", stageWidth);
         for (let i = 0; i < this._goodsList.length; i++) {
             // 记录每一层的数据
             let indexGoods = this._goodsList[i];
-            let tempIndex = 0;
             for (let j = 0; j < indexGoods.length; j++) {
                 const goods = indexGoods[j];
                 const newCard = new Laya.Sprite();
@@ -70,6 +68,9 @@ export class GoodsManager extends Laya.Script {
                     500,
                     null,
                     Laya.Handler.create(this, () => {
+                        if (i === this._goodsList.length - 1 && j === indexGoods.length - 1) {
+                            callBack && callBack();
+                        }
                         newCard.on(Laya.Event.CLICK, (event: Laya.Event) => {
                             if (!goods.canClick) {
                                 return;
@@ -291,7 +292,6 @@ export class GoodsManager extends Laya.Script {
         return Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2);
     }
     public goodsClear(): boolean {
-        console.log("调用了goodsClear");
         for (let i = 0; i < this._goodsList.length; i++) {
             if (this._goodsList[i].length !== 0) {
                 return false;

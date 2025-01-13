@@ -1,3 +1,5 @@
+import { Assert } from "../../utils/Assert";
+
 const { regClass, property } = Laya;
 
 @regClass()
@@ -8,9 +10,9 @@ export class LevelShowManager extends Laya.Script {
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
         // 第一关的时候，第二关上面显示一个黑点，当进入第二关的时候，黑点消失
-        this._Dot = this.owner.getChildByName("Dot") as Laya.Sprite;
-        this.owner.on("showGetIntoNextLevel", this._getIntoLevel2);
-        this.owner.on("resetLevel", this._reset);
+        this._Dot = (this.owner.getChildByName("Dot") as Laya.Sprite) || Assert.ChildNotNull;
+        Laya.stage.on("showGetIntoNextLevel", this, this._getIntoLevel2);
+        Laya.stage.on("resetLevel", this, this._reset);
     }
     private _getIntoLevel2() {
         this._Dot.visible = false;

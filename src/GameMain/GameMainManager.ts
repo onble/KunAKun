@@ -1,5 +1,6 @@
 import { Assert } from "../utils/Assert";
 import { GoodsManager } from "./GoodsManager";
+import { LevelUpManager } from "./LevelUpManager";
 
 const { regClass, property } = Laya;
 
@@ -9,17 +10,30 @@ export class GameMainManager extends Laya.Script {
     /** 当前关卡等级 */
     private _nowLevel: number = 1;
     private _goodsManagerScript: GoodsManager;
+    private _levelUpManagerScript: LevelUpManager;
+
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
         const GoodsBox = (this.owner.getChildByName("Goods") as Laya.Box) || Assert.ChildNotNull;
         this._goodsManagerScript = GoodsBox.getComponent(GoodsManager) || Assert.ComponentNotNull;
+        const LevelUpBox = this.owner.getChildByName("LevelUp") as Laya.Box;
+        this._levelUpManagerScript = LevelUpBox.getComponent(LevelUpManager) || Assert.ComponentNotNull;
+        this.getIntoLevel1();
+    }
+    public getIntoLevel1() {
+        Laya.stage.event("resetLevel");
         this._goodsManagerScript.Level1Show();
     }
     public nextLevel() {
         switch (this._nowLevel) {
             case 1:
                 // 去调用第二关的代码
-                this._goodsManagerScript.level2Show();
+                // 触发 "showGetIntoNextLevel" 事件
+                Laya.stage.event("showGetIntoNextLevel");
+                this._goodsManagerScript.level2Show(() => {
+                    // 去调用显示难度提升的代码
+                    this._levelUpManagerScript.show();
+                });
                 break;
             case 2:
                 alert("加入坤群");

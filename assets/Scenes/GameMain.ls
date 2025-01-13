@@ -22,8 +22,7 @@
       "_$comp": [
         {
           "_$type": "e9d6caa7-062a-40d7-b343-e6a16f5cb699",
-          "scriptPath": "../src/GameMain/GameMainManager.ts",
-          "text": ""
+          "scriptPath": "../src/GameMain/GameMainManager.ts"
         }
       ],
       "_$child": [
@@ -372,6 +371,81 @@
                       "leading": 2
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_$id": "3yk49z6e",
+          "_$type": "Box",
+          "name": "LevelUp",
+          "width": 460,
+          "height": 800,
+          "visible": false,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 0,
+          "_$comp": [
+            {
+              "_$type": "ddea99e8-fbda-4bc4-9857-77989405fca0",
+              "scriptPath": "../src/GameMain/LevelUpManager.ts"
+            }
+          ],
+          "_$child": [
+            {
+              "_$id": "fbsbszge",
+              "_$type": "Box",
+              "name": "blackBackground",
+              "width": 460,
+              "height": 800,
+              "_mouseState": 2,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+              "bottom": 0,
+              "bgColor": "rgba(0, 0, 0, 0.5882352941176471)"
+            },
+            {
+              "_$id": "ih72k757",
+              "_$type": "Image",
+              "name": "LevelUpBackground",
+              "x": 117,
+              "y": 242,
+              "width": 225.0030246179651,
+              "height": 119.75212952640133,
+              "skin": "res://457286ea-b9b0-4357-b985-6441bca428c3",
+              "color": "#ffffff",
+              "_$child": [
+                {
+                  "_$id": "mt2l8bmz",
+                  "_$type": "Text",
+                  "name": "Title",
+                  "width": 223,
+                  "height": 100,
+                  "text": "难度飙升",
+                  "fontSize": 50,
+                  "color": "rgba(252, 57, 49, 1)",
+                  "bold": true,
+                  "align": "center",
+                  "valign": "middle",
+                  "leading": 2
+                },
+                {
+                  "_$id": "nyn5qzu7",
+                  "_$type": "Text",
+                  "name": "LittleTitle",
+                  "x": 42,
+                  "y": 98,
+                  "width": 138,
+                  "height": 19,
+                  "text": "通关后将加入鸡群",
+                  "fontSize": 15,
+                  "color": "#FFFFFF",
+                  "align": "center",
+                  "valign": "middle",
+                  "leading": 2
                 }
               ]
             }
