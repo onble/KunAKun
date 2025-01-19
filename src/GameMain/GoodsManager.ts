@@ -12,6 +12,7 @@ export class GoodsManager extends Laya.Script {
     private _goodsList: Good[][] = [];
     private _ButtonManager: ButtonManager;
     private _BoxManger: BoxManager;
+    private _isPlayingAnimation: boolean = false;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
@@ -72,10 +73,9 @@ export class GoodsManager extends Laya.Script {
                             callBack && callBack();
                         }
                         newCard.on(Laya.Event.CLICK, (event: Laya.Event) => {
+                            event.stopPropagation();
                             if (!goods.canClick) {
                                 return;
-                            } else {
-                                event.stopPropagation();
                             }
                             if (this._BoxManger.canAddMore()) {
                                 // 将自己从列表中删除
@@ -134,10 +134,9 @@ export class GoodsManager extends Laya.Script {
                     newCard.addChild(shadow);
                 }
                 newCard.on(Laya.Event.CLICK, (event: Laya.Event) => {
+                    event.stopPropagation();
                     if (!goods.canClick) {
                         return;
-                    } else {
-                        event.stopPropagation();
                     }
                     if (this._BoxManger.canAddMore()) {
                         // 将自己从列表中删除
@@ -219,10 +218,9 @@ export class GoodsManager extends Laya.Script {
                             Laya.Tween.to(shadow, { alpha: 1 }, 200);
                         }
                         newCard.on(Laya.Event.CLICK, (event: Laya.Event) => {
+                            event.stopPropagation();
                             if (!goods.canClick) {
                                 return;
-                            } else {
-                                event.stopPropagation();
                             }
                             if (this._BoxManger.canAddMore()) {
                                 // 将自己从列表中删除

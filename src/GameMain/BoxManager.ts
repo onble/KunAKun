@@ -3,6 +3,7 @@ import { DisappearAnimation } from "./DisappearAnimation";
 import { GameMainManager } from "./GameMainManager";
 import { GameOverManager } from "./GameOverManager";
 import { GoodsManager } from "./GoodsManager";
+import { RevivePageManager } from "./RevivePageManager";
 import { good } from "./type";
 
 const { regClass, property } = Laya;
@@ -17,6 +18,8 @@ export class BoxManager extends Laya.Script {
     private _Choosed: Laya.Sprite;
     private _gameMainManager: GameMainManager;
     private _gameOverManager: GameOverManager;
+    private _canReviveNumbers: number = 1;
+    private _revivePageManager: RevivePageManager;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
@@ -29,15 +32,22 @@ export class BoxManager extends Laya.Script {
         this._Choosed = (this.owner.getChildByName("Choosed") as Laya.Sprite) || Assert.ChildNotNull;
         const GameOver = (Background.getChildByName("GameOver") as Laya.Box) || Assert.ChildNotNull;
         this._gameOverManager = GameOver.getComponent(GameOverManager) || Assert.ComponentNotNull;
+        const RevivePage = Background.getChildByName("RevivePage") || Assert.ChildNotNull;
+        this._revivePageManager = RevivePage.getComponent(RevivePageManager) || Assert.ComponentNotNull;
     }
     public canAddMore(): boolean {
-        return this._boxList.length < 6;
+        return this._boxList.length < 7;
     }
 
     public addGoods(goods: good): void {
         if (this._boxList.length > 6) {
             // alert("超过指定数量");
-            this._gameOverManager.cardSlotFull();
+            if (this._canReviveNumbers > 0) {
+                // 去调用显示选择复活的页面
+                this._revivePageManager.showReviePage();
+            } else {
+                this._gameOverManager.cardSlotFull();
+            }
             // TODO:直接进行失败处理
             // return false;
         } else {
@@ -151,7 +161,7 @@ export class BoxManager extends Laya.Script {
                         (this._Choosed.getChildByName(`${this._boxList[i].name}1`) as Laya.Sprite) ||
                         Assert.ChildNotNull;
                 }
-                Laya.Tween.to(rightItem, { x: rightItem.x + 60 }, 100);
+                Laya.Tween.to(rightItem, { x: 21 + 60 * i }, 100);
             }
         }
     }

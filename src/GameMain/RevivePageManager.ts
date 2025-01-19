@@ -12,6 +12,19 @@ export class RevivePageManager extends Laya.Script {
         const CloseButton = (Background.getChildByName("CloseButton") as Laya.Image) || Assert.ChildNotNull;
         const VideoButton = (Background.getChildByName("VideoButton") as Laya.Image) || Assert.ChildNotNull;
         const RefuseButton = Background.getChildByName("RefuseButton") || Assert.ChildNotNull;
+        CloseButton.on(Laya.Event.CLICK, () => {
+            this._gameOver();
+        });
+        RefuseButton.on(Laya.Event.CLICK, () => {
+            this._gameOver();
+        });
+    }
+    public showReviePage(): void {
+        this.owner.visible = true;
+    }
+    private _gameOver() {
+        // 去调用显示游戏因为卡槽满了结束的页面
+        this.owner.visible = false;
     }
 
     //组件被启用后执行，例如节点被添加到舞台后
