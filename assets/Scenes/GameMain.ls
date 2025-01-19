@@ -595,6 +595,178 @@
               ]
             }
           ]
+        },
+        {
+          "_$id": "r46glitu",
+          "_$type": "Box",
+          "name": "RevivePage",
+          "width": 460,
+          "height": 800,
+          "visible": false,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 0,
+          "_$comp": [
+            {
+              "_$type": "28ea23ac-0ff5-40e1-b9ef-cfa162bb792e",
+              "scriptPath": "../src/GameMain/RevivePageManager.ts"
+            }
+          ],
+          "_$child": [
+            {
+              "_$id": "c7mwdsoi",
+              "_$type": "Box",
+              "name": "blackBackground",
+              "width": 460,
+              "height": 800,
+              "_mouseState": 2,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+              "bottom": 0,
+              "bgColor": "rgba(0, 0, 0, 0.5882352941176471)"
+            },
+            {
+              "_$id": "fv9zkf10",
+              "_$type": "Image",
+              "name": "Background",
+              "x": 49,
+              "y": 150,
+              "width": 361.92432930683714,
+              "height": 539.071026633225,
+              "top": 150,
+              "centerX": 0,
+              "skin": "res://0de8f319-4b95-4738-9394-8ff31b422f64",
+              "color": "#ffffff",
+              "_$child": [
+                {
+                  "_$id": "9b8mar99",
+                  "_$type": "Image",
+                  "name": "Info",
+                  "x": 59,
+                  "y": 81,
+                  "width": 243.5284733638983,
+                  "height": 238.3955547215676,
+                  "centerX": 0,
+                  "skin": "res://02262042-8b42-40f8-8520-f34603f4613f",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "b5wmfn80",
+                  "_$type": "Image",
+                  "name": "TitleBackground",
+                  "x": -28,
+                  "y": -48,
+                  "width": 417.4690695693807,
+                  "height": 90.8024878621915,
+                  "skin": "res://d1e54667-bfef-4ab7-97ac-453ed6411c08",
+                  "color": "#ffffff",
+                  "_$child": [
+                    {
+                      "_$id": "3t4vy0no",
+                      "_$type": "Text",
+                      "name": "Title",
+                      "x": 32.000000000000036,
+                      "y": 10.999999999999972,
+                      "width": 353,
+                      "height": 60,
+                      "text": "立即复活",
+                      "fontSize": 49,
+                      "color": "rgba(255, 254, 85, 1)",
+                      "bold": true,
+                      "align": "center",
+                      "valign": "middle",
+                      "leading": 2,
+                      "stroke": 3
+                    }
+                  ]
+                },
+                {
+                  "_$id": "hfd5dwcn",
+                  "_$type": "Image",
+                  "name": "CloseButton",
+                  "x": 306,
+                  "y": -22,
+                  "width": 55.917808219178106,
+                  "height": 60.21917808219177,
+                  "skin": "res://7905c976-4919-4f3c-9a18-08cd9b910f5b",
+                  "color": "#ffffff"
+                },
+                {
+                  "_$id": "ksqs2z8g",
+                  "_$type": "Image",
+                  "name": "VideoButton",
+                  "x": 75,
+                  "y": 348,
+                  "width": 211.69548140884652,
+                  "height": 77.31035963215226,
+                  "centerX": 0,
+                  "skin": "res://6341cf5d-715d-4f2f-af0d-478342e420c2",
+                  "color": "#ffffff",
+                  "_$child": [
+                    {
+                      "_$id": "pxkde44q",
+                      "_$type": "Image",
+                      "name": "Icon",
+                      "x": 8.000000000000114,
+                      "y": 19,
+                      "width": 43.99999999999999,
+                      "height": 33.00000000000003,
+                      "skin": "res://05660d65-64d5-4ec1-aad6-03873f4fdb7d",
+                      "color": "#ffffff"
+                    },
+                    {
+                      "_$id": "9v0kehi7",
+                      "_$type": "Text",
+                      "name": "Text",
+                      "x": 56,
+                      "y": 11,
+                      "width": 150,
+                      "height": 52,
+                      "text": "获得(0/1)",
+                      "fontSize": 33,
+                      "color": "#FFFFFF",
+                      "bold": true,
+                      "align": "center",
+                      "valign": "middle",
+                      "leading": 2,
+                      "stroke": 2
+                    }
+                  ]
+                },
+                {
+                  "_$id": "ydc61al8",
+                  "_$type": "Image",
+                  "name": "RefuseButton",
+                  "x": 75,
+                  "y": 438,
+                  "width": 211.69548140884652,
+                  "height": 77.31035963215226,
+                  "centerX": 0,
+                  "skin": "res://06216a43-4d53-4857-98d5-f7e2758cbe1c",
+                  "color": "#ffffff",
+                  "_$child": [
+                    {
+                      "_$id": "gcagytqw",
+                      "_$type": "Text",
+                      "name": "Text",
+                      "width": 211,
+                      "height": 71,
+                      "text": "残忍拒绝",
+                      "fontSize": 35,
+                      "color": "#FFFFFF",
+                      "bold": true,
+                      "align": "center",
+                      "valign": "middle",
+                      "leading": 2,
+                      "stroke": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }

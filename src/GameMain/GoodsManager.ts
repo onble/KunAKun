@@ -77,12 +77,16 @@ export class GoodsManager extends Laya.Script {
                             } else {
                                 event.stopPropagation();
                             }
-                            // 将自己从列表中删除
-                            this._goodsList[i].splice(j, 1);
-                            // 将信息通知给盒子管理器
-                            this._BoxManger.addGoods(goods);
-                            this._showCoverGoods(goods, [i, j]);
-                            this._draw();
+                            if (this._BoxManger.canAddMore()) {
+                                // 将自己从列表中删除
+                                this._goodsList[i].splice(j, 1);
+                                // 将信息通知给盒子管理器
+                                this._BoxManger.addGoods(goods);
+                                this._showCoverGoods(goods, [i, j]);
+                                this._draw();
+                            } else {
+                                this._BoxManger.addGoods(goods);
+                            }
                         });
                     })
                 );
@@ -135,12 +139,17 @@ export class GoodsManager extends Laya.Script {
                     } else {
                         event.stopPropagation();
                     }
-                    // 将自己从列表中删除
-                    this._goodsList[i].splice(j, 1);
-                    // 将信息通知给盒子管理器
-                    this._BoxManger.addGoods(goods);
-                    this._showCoverGoods(goods, [i, j]);
-                    this._draw();
+                    if (this._BoxManger.canAddMore()) {
+                        // 将自己从列表中删除
+                        this._goodsList[i].splice(j, 1);
+                        // 将信息通知给盒子管理器
+                        this._BoxManger.addGoods(goods);
+                        this._showCoverGoods(goods, [i, j]);
+                        this._draw();
+                    } else {
+                        // 将信息通知给盒子管理器
+                        this._BoxManger.addGoods(goods);
+                    }
                 });
                 this.owner.addChild(newCard);
             }
@@ -215,12 +224,17 @@ export class GoodsManager extends Laya.Script {
                             } else {
                                 event.stopPropagation();
                             }
-                            // 将自己从列表中删除
-                            this._goodsList[i].splice(index, 1);
-                            // 将信息通知给盒子管理器
-                            this._BoxManger.addGoods(goods);
-                            this._showCoverGoods(goods, [i, index]);
-                            this._draw();
+                            if (this._BoxManger.canAddMore()) {
+                                // 将自己从列表中删除
+                                this._goodsList[i].splice(index, 1);
+                                // 将信息通知给盒子管理器
+                                this._BoxManger.addGoods(goods);
+                                this._showCoverGoods(goods, [i, index]);
+                                this._draw();
+                            } else {
+                                // 将信息通知给盒子管理器
+                                this._BoxManger.addGoods(goods);
+                            }
                         });
                         // 让下一个动画出发
                         tempIndex++;

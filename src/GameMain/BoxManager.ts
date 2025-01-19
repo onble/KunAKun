@@ -1,6 +1,7 @@
 import { Assert } from "../utils/Assert";
 import { DisappearAnimation } from "./DisappearAnimation";
 import { GameMainManager } from "./GameMainManager";
+import { GameOverManager } from "./GameOverManager";
 import { GoodsManager } from "./GoodsManager";
 import { good } from "./type";
 
@@ -15,6 +16,7 @@ export class BoxManager extends Laya.Script {
     private _GoodsManager: GoodsManager;
     private _Choosed: Laya.Sprite;
     private _gameMainManager: GameMainManager;
+    private _gameOverManager: GameOverManager;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
@@ -25,11 +27,17 @@ export class BoxManager extends Laya.Script {
         const Goods = (Background.getChildByName("Goods") as Laya.Box) || Assert.ChildNotNull;
         this._GoodsManager = Goods.getComponent(GoodsManager) || Assert.ChildNotNull;
         this._Choosed = (this.owner.getChildByName("Choosed") as Laya.Sprite) || Assert.ChildNotNull;
+        const GameOver = (Background.getChildByName("GameOver") as Laya.Box) || Assert.ChildNotNull;
+        this._gameOverManager = GameOver.getComponent(GameOverManager) || Assert.ComponentNotNull;
+    }
+    public canAddMore(): boolean {
+        return this._boxList.length < 6;
     }
 
     public addGoods(goods: good): void {
         if (this._boxList.length > 6) {
-            alert("超过指定数量");
+            // alert("超过指定数量");
+            this._gameOverManager.cardSlotFull();
             // TODO:直接进行失败处理
             // return false;
         } else {

@@ -1,18 +1,17 @@
-import { Main } from "../Main";
 import { Assert } from "../utils/Assert";
 
 const { regClass, property } = Laya;
 
 @regClass()
-export class GameHomeManager extends Laya.Script {
-    declare owner: Laya.Sprite;
+export class RevivePageManager extends Laya.Script {
+    declare owner: Laya.Box;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
-        const MainButton = (this.owner.getChildByName("MainButton") as Laya.Image) || Assert.ChildNotNull;
-        MainButton.on(Laya.Event.CLICK, this, () => {
-            Laya.Scene.open("./Scenes/GameMain.ls", true);
-        });
+        const Background = (this.owner.getChildByName("Background") as Laya.Image) || Assert.ChildNotNull;
+        const CloseButton = (Background.getChildByName("CloseButton") as Laya.Image) || Assert.ChildNotNull;
+        const VideoButton = (Background.getChildByName("VideoButton") as Laya.Image) || Assert.ChildNotNull;
+        const RefuseButton = Background.getChildByName("RefuseButton") || Assert.ChildNotNull;
     }
 
     //组件被启用后执行，例如节点被添加到舞台后
