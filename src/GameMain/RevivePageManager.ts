@@ -1,17 +1,23 @@
 import { Assert } from "../utils/Assert";
+import { GameOverManager } from "./GameOverManager";
 
 const { regClass, property } = Laya;
 
 @regClass()
 export class RevivePageManager extends Laya.Script {
     declare owner: Laya.Box;
+    private _gameOverManager: GameOverManager;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
+        /** 游戏背景底图 */
+        const GameBackground = (this.owner.parent as Laya.Image) || Assert.ChildNotNull;
         const Background = (this.owner.getChildByName("Background") as Laya.Image) || Assert.ChildNotNull;
         const CloseButton = (Background.getChildByName("CloseButton") as Laya.Image) || Assert.ChildNotNull;
         const VideoButton = (Background.getChildByName("VideoButton") as Laya.Image) || Assert.ChildNotNull;
         const RefuseButton = Background.getChildByName("RefuseButton") || Assert.ChildNotNull;
+        const GameOver = GameBackground.getChildByName("GameOver") || Assert.ChildNotNull;
+        this._gameOverManager = GameOver.getComponent(GameOverManager) || Assert.ComponentNotNull;
         CloseButton.on(Laya.Event.CLICK, () => {
             this._gameOver();
         });
@@ -25,6 +31,7 @@ export class RevivePageManager extends Laya.Script {
     private _gameOver() {
         // 去调用显示游戏因为卡槽满了结束的页面
         this.owner.visible = false;
+        this._gameOverManager.cardSlotFull();
     }
 
     //组件被启用后执行，例如节点被添加到舞台后

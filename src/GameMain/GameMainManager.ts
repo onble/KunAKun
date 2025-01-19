@@ -21,6 +21,7 @@ export class GameMainManager extends Laya.Script {
         this.getIntoLevel1();
     }
     public getIntoLevel1() {
+        this._nowLevel = 1;
         Laya.stage.event("resetLevel");
         this._goodsManagerScript.Level1Show();
     }
@@ -41,7 +42,6 @@ export class GameMainManager extends Laya.Script {
             default:
                 console.warn("错误的数据");
         }
-        this._nowLevel++;
     }
     //组件被启用后执行，例如节点被添加到舞台后
     //onEnable(): void {}

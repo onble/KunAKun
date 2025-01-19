@@ -1,4 +1,5 @@
 import { Assert } from "../utils/Assert";
+import { GameMainManager } from "./GameMainManager";
 
 const { regClass, property } = Laya;
 
@@ -8,9 +9,13 @@ export class GameOverManager extends Laya.Script {
     private _LevelUpBackground: Laya.Image;
     private _blackBackground: Laya.Box;
     private _ButtonGroup: Laya.Box;
+    private _gameMainManager: GameMainManager;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
+        /** 游戏背景底图 */
+        const GameBackground = (this.owner.parent as Laya.Image) || Assert.ChildNotNull;
+        this._gameMainManager = GameBackground.getComponent(GameMainManager) || Assert.ComponentNotNull;
         this._LevelUpBackground = (this.owner.getChildByName("LevelUpBackground") as Laya.Image) || Assert.ChildNotNull;
         this._blackBackground = (this.owner.getChildByName("blackBackground") as Laya.Box) || Assert.ChildNotNull;
         this._ButtonGroup = (this.owner.getChildByName("ButtonGroup") as Laya.Box) || Assert.ChildNotNull;
@@ -18,6 +23,15 @@ export class GameOverManager extends Laya.Script {
         this._blackBackground.on(Laya.Event.CLICK, this, (event: Laya.Event) => {
             // 阻止事件继续冒泡
             event.stopPropagation();
+        });
+        const Reset = (this._ButtonGroup.getChildByName("Reset") as Laya.Image) || Assert.ChildNotNull;
+        Reset.on(Laya.Event.CLICK, this, () => {
+            // 重新加载游戏界面即可完成重置的逻辑
+            Laya.Scene.open("./Scenes/GameMain.ls", true);
+        });
+        const BackHome = (this._ButtonGroup.getChildByName("BackHome") as Laya.Image) || Assert.ChildNotNull;
+        BackHome.on(Laya.Event.CLICK, this, () => {
+            Laya.Scene.open("./Scenes/GameHome.ls", true);
         });
     }
     public cardSlotFull() {

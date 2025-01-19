@@ -267,36 +267,6 @@
               "color": "#ffffff"
             },
             {
-              "_$id": "bq2qzili",
-              "_$type": "List",
-              "name": "Choose",
-              "x": 18,
-              "y": 563,
-              "width": 420,
-              "height": 66,
-              "visible": false,
-              "_mouseState": 2,
-              "itemTemplate": {
-                "_$ref": "xh79ify6",
-                "_$tmpl": "itemRender"
-              },
-              "repeatX": 7,
-              "repeatY": 1,
-              "_$child": [
-                {
-                  "_$id": "xh79ify6",
-                  "_$type": "Sprite",
-                  "name": "card",
-                  "width": 60,
-                  "height": 66,
-                  "texture": {
-                    "_$uuid": "56896809-662a-488d-9e83-ba42427083d5",
-                    "_$type": "Texture"
-                  }
-                }
-              ]
-            },
-            {
               "_$id": "5gs445yx",
               "_$type": "Sprite",
               "name": "Choosed",
