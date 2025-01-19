@@ -450,6 +450,151 @@
               ]
             }
           ]
+        },
+        {
+          "_$id": "1vhwf90l",
+          "_$type": "Box",
+          "name": "GameOver",
+          "width": 460,
+          "height": 800,
+          "visible": false,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 0,
+          "_$comp": [
+            {
+              "_$type": "80a89061-91e1-4f61-9df7-c1e5bc7b8bc5",
+              "scriptPath": "../src/GameMain/GameOverManager.ts"
+            }
+          ],
+          "_$child": [
+            {
+              "_$id": "95wabrc4",
+              "_$type": "Box",
+              "name": "blackBackground",
+              "width": 460,
+              "height": 800,
+              "_mouseState": 2,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+              "bottom": 0,
+              "bgColor": "rgba(0, 0, 0, 0.5882352941176471)"
+            },
+            {
+              "_$id": "ecoyvxko",
+              "_$type": "Image",
+              "name": "LevelUpBackground",
+              "x": 117,
+              "y": 242,
+              "width": 225.0030246179651,
+              "height": 119.75212952640133,
+              "skin": "res://457286ea-b9b0-4357-b985-6441bca428c3",
+              "color": "#ffffff",
+              "_$child": [
+                {
+                  "_$id": "uzbukod0",
+                  "_$type": "Text",
+                  "name": "Title",
+                  "width": 223,
+                  "height": 100,
+                  "text": "槽位已满",
+                  "fontSize": 50,
+                  "color": "rgba(252, 57, 49, 1)",
+                  "bold": true,
+                  "align": "center",
+                  "valign": "middle",
+                  "leading": 2
+                },
+                {
+                  "_$id": "aipd2wwa",
+                  "_$type": "Text",
+                  "name": "LittleTitle",
+                  "x": 42,
+                  "y": 98,
+                  "width": 138,
+                  "height": 19,
+                  "text": "今日已挑战5次",
+                  "fontSize": 15,
+                  "color": "#FFFFFF",
+                  "align": "center",
+                  "valign": "middle",
+                  "leading": 2
+                }
+              ]
+            },
+            {
+              "_$id": "iva7koip",
+              "_$type": "Box",
+              "name": "ButtonGroup",
+              "y": 367,
+              "width": 459,
+              "height": 430,
+              "_$child": [
+                {
+                  "_$id": "fq2lxqtu",
+                  "_$type": "Image",
+                  "name": "Reset",
+                  "x": 151,
+                  "y": 157,
+                  "width": 156.31293179805124,
+                  "height": 51.07254207263068,
+                  "centerX": 0,
+                  "skin": "res://80e33d42-8dba-4674-922b-e8d6d3378f2d",
+                  "color": "#ffffff",
+                  "_$child": [
+                    {
+                      "_$id": "xkctuwup",
+                      "_$type": "Text",
+                      "name": "Title",
+                      "x": 2,
+                      "y": 3,
+                      "width": 153,
+                      "height": 42,
+                      "text": "重新挑战",
+                      "fontSize": 26,
+                      "color": "rgba(0, 0, 0, 1)",
+                      "bold": true,
+                      "align": "center",
+                      "valign": "middle",
+                      "leading": 2
+                    }
+                  ]
+                },
+                {
+                  "_$id": "gs70n38r",
+                  "_$type": "Image",
+                  "name": "BackHome",
+                  "x": 151,
+                  "y": 221,
+                  "width": 156.31293179805124,
+                  "height": 51.07254207263068,
+                  "centerX": 0,
+                  "skin": "res://80e33d42-8dba-4674-922b-e8d6d3378f2d",
+                  "color": "#ffffff",
+                  "_$child": [
+                    {
+                      "_$id": "7202yghd",
+                      "_$type": "Text",
+                      "name": "Title",
+                      "x": 2,
+                      "y": 3,
+                      "width": 153,
+                      "height": 42,
+                      "text": "返回鸡群",
+                      "fontSize": 26,
+                      "color": "rgba(0, 0, 0, 1)",
+                      "bold": true,
+                      "align": "center",
+                      "valign": "middle",
+                      "leading": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }

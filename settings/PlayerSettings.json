@@ -1,7 +1,8 @@
 {
   "resolution": {
     "designWidth": 460,
-    "designHeight": 800
+    "designHeight": 800,
+    "backgroundColor": "rgba(186, 186, 186, 1)"
   },
   "3D": {
     "lightClusterCount": {
