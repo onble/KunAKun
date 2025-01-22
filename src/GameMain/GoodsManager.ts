@@ -325,6 +325,18 @@ export class GoodsManager extends Laya.Script {
         }
         this._draw();
     }
+    public pushGoods(goods: Good[], ifCover: boolean, callBack?: Function, args?: any[]) {
+        if (ifCover) {
+            for (let i = 0; i < this._goodsList[this._goodsList.length - 1].length; i++) {
+                this._goodsList[this._goodsList.length - 1][i].canClick = false;
+            }
+        }
+        // 将新的good增加到列表中
+        this._goodsList.push(goods);
+
+        callBack && callBack();
+        this._draw();
+    }
 
     //每帧更新时执行，在update之后执行，尽量不要在这里写大循环逻辑或者使用getComponent方法
     //onLateUpdate(): void {}

@@ -1,4 +1,5 @@
 import { Assert } from "../utils/Assert";
+import { BoxManager } from "./BoxManager";
 import { GoodsManager } from "./GoodsManager";
 
 const { regClass, property } = Laya;
@@ -11,6 +12,7 @@ export class ButtonManager extends Laya.Script {
     private _refreshButton: Laya.Image;
     private _refreshDotText: Laya.Text;
     private _GoodsManager: GoodsManager;
+    private _boxManager: BoxManager;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
@@ -19,6 +21,8 @@ export class ButtonManager extends Laya.Script {
         /** 待消除物品组件 */
         const Goods = (Background.getChildByName("Goods") as Laya.Box) || Assert.ChildNotNull;
         this._GoodsManager = Goods.getComponent(GoodsManager) || Assert.ComponentNotNull;
+        const Box = (Background.getChildByName("Box") as Laya.Sprite) || Assert.ChildNotNull;
+        this._boxManager = Box.getComponent(BoxManager) || Assert.ComponentNotNull;
         this._refreshButton = (this.owner.getChildByName("Refresh") as Laya.Image) || Assert.ChildNotNull;
         const refreshDot = (this._refreshButton.getChildByName("Dot") as Laya.Sprite) || Assert.ChildNotNull;
         this._refreshDotText = (refreshDot.getChildByName("dotNumber") as Laya.Text) || Assert.ChildNotNull;
@@ -28,6 +32,11 @@ export class ButtonManager extends Laya.Script {
             this._refresh--;
             this._refreshDotText.text = `${this._refresh}`;
             this._GoodsManager.refreshGoods();
+        });
+        const Push = (this.owner.getChildByName("Push") as Laya.Image) || Assert.ChildNotNull;
+        Push.on(Laya.Event.CLICK, this, () => {
+            if (!this._boxManager.canPushBox()) return;
+            this._boxManager.pushBox();
         });
     }
 

@@ -20,6 +20,7 @@ export class BoxManager extends Laya.Script {
     private _gameOverManager: GameOverManager;
     private _canReviveNumbers: number = 1;
     private _revivePageManager: RevivePageManager;
+    private _pushCount: number = 0;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
@@ -164,6 +165,156 @@ export class BoxManager extends Laya.Script {
                 Laya.Tween.to(rightItem, { x: 21 + 60 * i }, 100);
             }
         }
+    }
+    public canPushBox(): boolean {
+        if (this._boxList.length >= 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public pushBox(): good[] {
+        let result: good[] = [];
+        if (!this.canPushBox()) {
+            return result;
+        }
+        // 将左边的三个卡牌移动到中间
+        const good1 = (this._Choosed.getChildByName(`${this._boxList[0].name}1`) as Laya.Sprite) || Assert.ChildNotNull;
+        let good2 = null;
+        let good3 = null;
+        if (this._boxList[0].name === this._boxList[1].name) {
+            good2 = (this._Choosed.getChildByName(`${this._boxList[1].name}2`) as Laya.Sprite) || Assert.ChildNotNull;
+            good3 = (this._Choosed.getChildByName(`${this._boxList[2].name}1`) as Laya.Sprite) || Assert.ChildNotNull;
+            // 对后面那一个进行检查
+            const nextGood3 = this._Choosed.getChildByName(`${this._boxList[2].name}2`) as Laya.Sprite;
+            if (nextGood3) {
+                nextGood3.name = `${this._boxList[2].name}1`;
+            }
+        } else {
+            good2 = (this._Choosed.getChildByName(`${this._boxList[1].name}1`) as Laya.Sprite) || Assert.ChildNotNull;
+            if (this._boxList[1].name === this._boxList[2].name) {
+                good3 =
+                    (this._Choosed.getChildByName(`${this._boxList[2].name}2`) as Laya.Sprite) || Assert.ChildNotNull;
+            } else {
+                good3 =
+                    (this._Choosed.getChildByName(`${this._boxList[2].name}1`) as Laya.Sprite) || Assert.ChildNotNull;
+                // 对后面那一个进行检查
+                const nextGood3 = this._Choosed.getChildByName(`${this._boxList[2].name}2`) as Laya.Sprite;
+                if (nextGood3) {
+                    nextGood3.name = `${this._boxList[2].name}1`;
+                }
+            }
+        }
+        good1.name = "good1";
+        good2.name = "good2";
+        good3.name = "good3";
+        if (this._pushCount % 2 === 0) {
+            Laya.Tween.to(good1, { x: 130, y: 430 }, 300);
+            Laya.Tween.to(good2, { x: 200, y: 430 }, 300);
+            Laya.Tween.to(
+                good3,
+                { x: 270, y: 430 },
+                300,
+                null,
+                Laya.Handler.create(this, () => {
+                    this._GoodsManager.pushGoods(result, this._pushCount > 1, () => {
+                        good1.removeSelf();
+                        good2.removeSelf();
+                        good3.removeSelf();
+                        // good1.destroy(true);
+                        // good2.destroy(true);
+                        // good3.destroy(true);
+                    });
+                })
+            );
+            result.push(
+                {
+                    name: this._boxList[0].name,
+                    canClick: true,
+                    x: 130,
+                    y: 430,
+                    width: this._boxList[0].width,
+                    height: this._boxList[0].height,
+                },
+                {
+                    name: this._boxList[1].name,
+                    canClick: true,
+                    x: 200,
+                    y: 430,
+                    width: this._boxList[1].width,
+                    height: this._boxList[1].height,
+                },
+                {
+                    name: this._boxList[2].name,
+                    canClick: true,
+                    x: 270,
+                    y: 430,
+                    width: this._boxList[2].width,
+                    height: this._boxList[2].height,
+                }
+            );
+        } else {
+            Laya.Tween.to(good1, { x: 130, y: 460 }, 300);
+            Laya.Tween.to(good2, { x: 200, y: 460 }, 300);
+            Laya.Tween.to(
+                good3,
+                { x: 270, y: 460 },
+                300,
+                null,
+                Laya.Handler.create(this, () => {
+                    this._GoodsManager.pushGoods(result, this._pushCount > 1, () => {
+                        good1.removeSelf();
+                        good2.removeSelf();
+                        good3.removeSelf();
+                        // good1.destroy(true);
+                        // good2.destroy(true);
+                        // good3.destroy(true);
+                    });
+                })
+            );
+            result.push(
+                {
+                    name: this._boxList[0].name,
+                    canClick: true,
+                    x: 130,
+                    y: 460,
+                    width: this._boxList[0].width,
+                    height: this._boxList[0].height,
+                },
+                {
+                    name: this._boxList[1].name,
+                    canClick: true,
+                    x: 200,
+                    y: 460,
+                    width: this._boxList[1].width,
+                    height: this._boxList[1].height,
+                },
+                {
+                    name: this._boxList[2].name,
+                    canClick: true,
+                    x: 270,
+                    y: 460,
+                    width: this._boxList[2].width,
+                    height: this._boxList[2].height,
+                }
+            );
+        }
+        this._boxList.splice(0, 3);
+        // 将右边的卡牌进行向左移动
+        for (let i = 0; i < this._boxList.length; i++) {
+            let item = undefined;
+            if (i > 0 && this._boxList[i - 1].name === this._boxList[i].name) {
+                item =
+                    (this._Choosed.getChildByName(`${this._boxList[i].name}2`) as Laya.Sprite) || Assert.ChildNotNull;
+            } else {
+                item =
+                    (this._Choosed.getChildByName(`${this._boxList[i].name}1`) as Laya.Sprite) || Assert.ChildNotNull;
+            }
+            Laya.Tween.to(item, { x: 21 + 60 * i }, 100, null);
+        }
+
+        this._pushCount++;
+        return result;
     }
     //组件被启用后执行，例如节点被添加到舞台后
     //onEnable(): void {}

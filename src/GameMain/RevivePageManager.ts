@@ -1,4 +1,5 @@
 import { Assert } from "../utils/Assert";
+import { VideoSceneManager } from "../VideoScene/VideoSceneManager";
 import { GameOverManager } from "./GameOverManager";
 
 const { regClass, property } = Laya;
@@ -7,6 +8,7 @@ const { regClass, property } = Laya;
 export class RevivePageManager extends Laya.Script {
     declare owner: Laya.Box;
     private _gameOverManager: GameOverManager;
+    private _videoSceneManage: VideoSceneManager;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
@@ -16,13 +18,20 @@ export class RevivePageManager extends Laya.Script {
         const CloseButton = (Background.getChildByName("CloseButton") as Laya.Image) || Assert.ChildNotNull;
         const VideoButton = (Background.getChildByName("VideoButton") as Laya.Image) || Assert.ChildNotNull;
         const RefuseButton = Background.getChildByName("RefuseButton") || Assert.ChildNotNull;
-        const GameOver = GameBackground.getChildByName("GameOver") || Assert.ChildNotNull;
+        const GameOver = (GameBackground.getChildByName("GameOver") as Laya.Box) || Assert.ChildNotNull;
+        const VideoScene = (GameBackground.getChildByName("VideoScene") as Laya.Box) || Assert.ChildNotNull;
+        this._videoSceneManage = VideoScene.getComponent(VideoSceneManager) || Assert.ComponentNotNull;
         this._gameOverManager = GameOver.getComponent(GameOverManager) || Assert.ComponentNotNull;
         CloseButton.on(Laya.Event.CLICK, () => {
             this._gameOver();
         });
         RefuseButton.on(Laya.Event.CLICK, () => {
             this._gameOver();
+        });
+        VideoButton.on(Laya.Event.CLICK, () => {
+            console.log("跳转到视频页面");
+            // 跳转到视频页面
+            this._videoSceneManage.showVideo();
         });
     }
     public showReviePage(): void {
