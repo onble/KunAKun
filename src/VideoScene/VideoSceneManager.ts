@@ -52,7 +52,6 @@ export class VideoSceneManager extends Laya.Script {
                     this._frostedGlass.visible = true;
                     // 去获得奖励
                     awardCallback && awardCallback();
-                    this._video.removeSelf();
                 }
             }, 1000);
         });

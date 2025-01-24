@@ -95,13 +95,29 @@ export class BoxManager extends Laya.Script {
                     console.warn("异常数据");
             }
 
+            // 将新加入的卡牌进行移动
             Laya.Tween.to(
                 newGood,
                 { x: 21 + 60 * pushIndex, y: 563 },
                 200,
                 null,
                 new Laya.Handler(this, () => {
+                    // 如果可以消除
                     if (count == 2) {
+                        let minu = 3;
+                        for (let i = this._boxList.length - 1; i >= 0; i--) {
+                            if (this._boxList[i].name === goods.name) {
+                                minu--;
+                                // 将这个元素从数组中移除
+                                this._boxList.splice(i, 1);
+                            }
+                            if (minu === 0) {
+                                break;
+                            }
+                        }
+                        this._boxList = this._boxList.filter((it: good) => {
+                            return it.name != goods.name;
+                        });
                         this._backGoodInfo = null;
                         let card1 = this._Choosed.getChildByName(`${goods.name}1`) as Laya.Sprite;
                         let card2 = this._Choosed.getChildByName(`${goods.name}2`) as Laya.Sprite;
@@ -122,7 +138,7 @@ export class BoxManager extends Laya.Script {
                             });
                         });
                         // 将右边的向左移动
-                        for (let i = this._boxList.length - 1; i > pushIndex - 2; i--) {
+                        for (let i = 0; i < this._boxList.length; i++) {
                             let rightItem: Laya.Sprite = null;
                             if (i - 1 >= 0 && this._boxList[i - 1].name === this._boxList[i].name) {
                                 rightItem =
@@ -139,16 +155,14 @@ export class BoxManager extends Laya.Script {
                                 300,
                                 null,
                                 Laya.Handler.create(this, () => {
-                                    Laya.Tween.to(rightItem, { x: 21 + 60 * (i - 3) }, 100);
+                                    Laya.Tween.to(rightItem, { x: 21 + 60 * i }, 100);
                                 })
                             );
                         }
                         card1.removeSelf();
                         card2.removeSelf();
                         card3.removeSelf();
-                        this._boxList = this._boxList.filter((it: good) => {
-                            return it.name != goods.name;
-                        });
+
                         setTimeout(() => {
                             // 判断是否完成游戏
                             if (this._boxList.length == 0 && this._GoodsManager.goodsClear()) {
