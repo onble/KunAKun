@@ -61,6 +61,42 @@
               "color": "#ffffff"
             }
           ]
+        },
+        {
+          "_$id": "cq6ne1bj",
+          "_$type": "Image",
+          "name": "Chick1",
+          "x": 85.99999999999999,
+          "y": 170,
+          "width": 100,
+          "height": 100,
+          "skin": "res://aa702d08-1166-4cfa-bc0c-0ea5140bce2c",
+          "useSourceSize": true,
+          "color": "#ffffff"
+        },
+        {
+          "_$id": "3lf0542m",
+          "_$type": "Image",
+          "name": "Chick2",
+          "x": 191.99999999999997,
+          "y": 170,
+          "width": 100,
+          "height": 100,
+          "skin": "res://0081e9ae-de4b-468a-a9ce-33825f10afcc",
+          "useSourceSize": true,
+          "color": "#ffffff"
+        },
+        {
+          "_$id": "t8bfpgot",
+          "_$type": "Image",
+          "name": "Chick3",
+          "x": 291.65237608496324,
+          "y": 170.5306140059416,
+          "width": 100,
+          "height": 100,
+          "skin": "res://8be64959-97c5-4abb-a597-0ab723f90cf9",
+          "useSourceSize": true,
+          "color": "#ffffff"
         }
       ]
     }

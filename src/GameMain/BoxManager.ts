@@ -104,20 +104,21 @@ export class BoxManager extends Laya.Script {
                 new Laya.Handler(this, () => {
                     // 如果可以消除
                     if (count == 2) {
+                        // 将前三个名字相同的进行删除
                         let minu = 3;
-                        for (let i = this._boxList.length - 1; i >= 0; i--) {
+                        let minuIndex: number[] = [];
+                        for (let i = 0; i < this._boxList.length; i++) {
                             if (this._boxList[i].name === goods.name) {
                                 minu--;
-                                // 将这个元素从数组中移除
-                                this._boxList.splice(i, 1);
+                                minuIndex.push(i);
                             }
                             if (minu === 0) {
                                 break;
                             }
                         }
-                        this._boxList = this._boxList.filter((it: good) => {
-                            return it.name != goods.name;
-                        });
+                        while (minuIndex.length > 0) {
+                            this._boxList.splice(minuIndex.pop(), 1);
+                        }
                         this._backGoodInfo = null;
                         let card1 = this._Choosed.getChildByName(`${goods.name}1`) as Laya.Sprite;
                         let card2 = this._Choosed.getChildByName(`${goods.name}2`) as Laya.Sprite;

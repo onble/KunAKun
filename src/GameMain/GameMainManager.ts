@@ -1,3 +1,4 @@
+import { MusicManager } from "../Instance/MusicManager";
 import { Assert } from "../utils/Assert";
 import { GameWinManager } from "./GameWinManager";
 import { GoodsManager } from "./GoodsManager";
@@ -23,6 +24,7 @@ export class GameMainManager extends Laya.Script {
         this.getIntoLevel1();
         const GameWin = (this.owner.getChildByName("GameWin") as Laya.Box) || Assert.ChildNotNull;
         this._gameWinManagerScript = GameWin.getComponent(GameWinManager) || Assert.ComponentNotNull;
+        MusicManager.getInstance().playGameMainMusic();
     }
     public getIntoLevel1() {
         this._nowLevel = 1;

@@ -1,3 +1,5 @@
+import { GameDate } from "../Instance/GameDate";
+import { MusicManager } from "../Instance/MusicManager";
 import { Main } from "../Main";
 import { Assert } from "../utils/Assert";
 
@@ -13,6 +15,12 @@ export class GameHomeManager extends Laya.Script {
         MainButton.on(Laya.Event.CLICK, this, () => {
             Laya.Scene.open("./Scenes/GameMain.ls", true);
         });
+        if (GameDate.getInstance().getIsPass()) {
+            MusicManager.getInstance().playGamePassMusic();
+        } else {
+            // 播放背景音乐
+            MusicManager.getInstance().playGameHomeMusic();
+        }
     }
 
     //组件被启用后执行，例如节点被添加到舞台后
