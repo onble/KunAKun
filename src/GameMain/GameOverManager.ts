@@ -48,7 +48,7 @@ export class GameOverManager extends Laya.Script {
         this._LevelUpBackground.y = 420;
         this._blackBackground.alpha = 0;
         this._ButtonGroup.visible = false;
-        this._LittleTitle.text = `今日已挑战${GameDate.getInstance().incrementPlayTimes()}次`;
+        this._LittleTitle.text = `累计已挑战${GameDate.getInstance().incrementPlayTimes()}次`;
         this.owner.visible = true;
         Laya.Tween.to(this._blackBackground, { alpha: 1 }, 500);
         Laya.Tween.to(

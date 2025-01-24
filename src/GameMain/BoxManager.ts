@@ -139,7 +139,7 @@ export class BoxManager extends Laya.Script {
                                 300,
                                 null,
                                 Laya.Handler.create(this, () => {
-                                    Laya.Tween.to(rightItem, { x: rightItem.x - 180 }, 100);
+                                    Laya.Tween.to(rightItem, { x: 21 + 60 * (i - 3) }, 100);
                                 })
                             );
                         }
