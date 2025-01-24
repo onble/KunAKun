@@ -8,6 +8,10 @@ export class VideoSceneManager extends Laya.Script {
     private _video: Laya.VideoNode;
     private _info: Laya.Text;
     private _countTime: number;
+    /** 控制定时器 */
+    private _timer: number;
+    /** 毛玻璃UI */
+    private _frostedGlass: Laya.Box;
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
         this._video = (this.owner.getChildByName("Video") as Laya.VideoNode) || Assert.ChildNotNull;
@@ -17,25 +21,31 @@ export class VideoSceneManager extends Laya.Script {
         const RightLeft = (this.owner.getChildByName("RightLeft") as Laya.Sprite) || Assert.ChildNotNull;
         RightLeft.on(Laya.Event.CLICK, () => {
             this._video.pause();
+            clearInterval(this._timer);
             this.owner.visible = false;
         });
+        this._frostedGlass = (this.owner.getChildByName("FrostedGlass") as Laya.Box) || Assert.ChildNotNull;
     }
     public showVideo(awardCallback?: Function) {
-        console.log("showVideo");
+        this._frostedGlass.visible = false;
+        this._info.text = `倒计时${30}秒`;
         this.owner.visible = true;
         Laya.loader.load("./resources/videos/1.mp4").then(() => {
+            this._video.reload();
             this._video.play();
             this._video.loop = true;
             this._countTime = 30;
-            const timer = setInterval(() => {
+            this._timer = setInterval(() => {
                 this._countTime--;
+                this._info.text = `倒计时${this._countTime}秒`;
                 if (this._countTime <= 0) {
-                    clearInterval(timer);
+                    clearInterval(this._timer);
+                    this._info.text = `已获得奖励`;
                     this._video.pause();
+                    this._frostedGlass.visible = true;
                     // 去获得奖励
                     awardCallback && awardCallback();
                 }
-                this._info.text = `倒计时${this._countTime}秒`;
             }, 1000);
         });
     }

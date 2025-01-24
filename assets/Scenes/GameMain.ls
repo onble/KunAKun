@@ -1171,6 +1171,19 @@
               "source": "res://2df7b7c5-a48d-4677-9f9a-dc12b924f2f9"
             },
             {
+              "_$id": "6mkktp79",
+              "_$type": "Box",
+              "name": "Box",
+              "width": 460,
+              "height": 800,
+              "alpha": 0.85,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+              "bottom": 0,
+              "bgColor": "rgba(84, 84, 83, 1)"
+            },
+            {
               "_$id": "urdcir8q",
               "_$type": "Image",
               "name": "TopLeft",

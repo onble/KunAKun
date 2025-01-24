@@ -322,7 +322,7 @@ export class GoodsManager extends Laya.Script {
         }
         return true;
     }
-    public refreshGoods() {
+    /* public refreshGoods() {
         const goodsListStack: string[] = [];
         for (let i = 0; i < this._goodsList.length; i++) {
             for (let j = 0; j < this._goodsList[i].length; j++) {
@@ -334,6 +334,31 @@ export class GoodsManager extends Laya.Script {
                 this._goodsList[i][j].name = goodsListStack.pop();
             }
         }
+        this._draw();
+    } */
+    refreshGoods() {
+        const goodsListStack: string[] = [];
+        // 将所有商品名称收集到 goodsListStack 数组中
+        for (let i = 0; i < this._goodsList.length; i++) {
+            for (let j = 0; j < this._goodsList[i].length; j++) {
+                goodsListStack.push(this._goodsList[i][j].name);
+            }
+        }
+
+        // 使用 Fisher-Yates 洗牌算法打乱商品名称数组
+        for (let i = goodsListStack.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [goodsListStack[i], goodsListStack[j]] = [goodsListStack[j], goodsListStack[i]];
+        }
+
+        // 将打乱后的商品名称重新赋值给商品列表
+        for (let i = 0; i < this._goodsList.length; i++) {
+            for (let j = 0; j < this._goodsList[i].length; j++) {
+                this._goodsList[i][j].name = goodsListStack.pop();
+            }
+        }
+
+        // 重新绘制
         this._draw();
     }
     public pushGoods(goods: Good[], ifCover: boolean, callBack?: Function, args?: any[]) {
