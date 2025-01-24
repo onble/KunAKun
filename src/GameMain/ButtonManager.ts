@@ -9,7 +9,7 @@ const { regClass, property } = Laya;
 export class ButtonManager extends Laya.Script {
     declare owner: Laya.Box;
     /** 可以洗牌的次数 */
-    private _refresh: number = 99;
+    private _refresh: number = 0;
     /** 洗牌按钮 */
     private _refreshButton: Laya.Image;
     /** 洗牌文本 */
@@ -43,39 +43,52 @@ export class ButtonManager extends Laya.Script {
         this._refreshButton = (this.owner.getChildByName("Refresh") as Laya.Image) || Assert.ChildNotNull;
         const refreshDot = (this._refreshButton.getChildByName("Dot") as Laya.Sprite) || Assert.ChildNotNull;
         this._refreshDotText = (refreshDot.getChildByName("dotNumber") as Laya.Text) || Assert.ChildNotNull;
-        this._refreshDotText.text = `${this._refresh}`;
+        this._refreshDotText.text = `${this._refresh || "+"}`;
         this._refreshButton.on(Laya.Event.CLICK, this, () => {
-            if (this._refresh <= 0) return;
-            this._refresh--;
-            this._refreshDotText.text = `${this._refresh}`;
-            this._GoodsManager.refreshGoods();
+            if (this._refresh <= 0) {
+                this._videoSceneManager.showVideo(() => {
+                    this._refresh++;
+                    this._refreshDotText.text = `${this._refresh}`;
+                });
+            } else {
+                this._refresh--;
+                this._refreshDotText.text = `${this._refresh || "+"}`;
+                this._GoodsManager.refreshGoods();
+            }
         });
         const PushButton = (this.owner.getChildByName("Push") as Laya.Image) || Assert.ChildNotNull;
         const pushDot = (PushButton.getChildByName("Dot") as Laya.Sprite) || Assert.ChildNotNull;
         this._pushDotText = (pushDot.getChildByName("dotNumber") as Laya.Text) || Assert.ChildNotNull;
-        this._pushDotText.text = `${this._pushCount}`;
+        this._pushDotText.text = `${this._pushCount || "+"}`;
         PushButton.on(Laya.Event.CLICK, this, () => {
             if (this._pushCount <= 0) {
                 this._videoSceneManager.showVideo(() => {
                     this._pushCount++;
                     this._pushDotText.text = `${this._pushCount}`;
                 });
+            } else {
+                if (!this._boxManager.canPushBox()) return;
+                this._pushCount--;
+                this._pushDotText.text = `${this._pushCount || "+"}`;
+                this._boxManager.pushBox();
             }
-            if (!this._boxManager.canPushBox()) return;
-            this._pushCount--;
-            this._pushDotText.text = `${this._pushCount}`;
-            this._boxManager.pushBox();
         });
         const BackButton = (this.owner.getChildByName("Back") as Laya.Image) || Assert.ChildNotNull;
         const backDot = (BackButton.getChildByName("Dot") as Laya.Sprite) || Assert.ChildNotNull;
         this._backDotText = (backDot.getChildByName("dotNumber") as Laya.Text) || Assert.ChildNotNull;
-        this._backDotText.text = `${this._backCount}`;
+        this._backDotText.text = `${this._backCount || "+"}`;
         BackButton.on(Laya.Event.CLICK, this, () => {
-            if (this._backCount <= 0) return;
-            if (!this._boxManager.canBackBox()) return;
-            this._backCount--;
-            this._backDotText.text = `${this._backCount}`;
-            this._boxManager.backBox();
+            if (this._backCount <= 0) {
+                this._videoSceneManager.showVideo(() => {
+                    this._backCount++;
+                    this._backDotText.text = `${this._backCount}`;
+                });
+            } else {
+                if (!this._boxManager.canBackBox()) return;
+                this._backCount--;
+                this._backDotText.text = `${this._backCount || "+"}`;
+                this._boxManager.backBox();
+            }
         });
     }
 
