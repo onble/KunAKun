@@ -1163,17 +1163,16 @@
           ],
           "_$child": [
             {
-              "_$id": "5vupoo4c",
+              "_$id": "0rz74sh3",
               "_$type": "VideoNode",
               "name": "Video",
               "width": 460,
-              "height": 800,
-              "source": "res://2df7b7c5-a48d-4677-9f9a-dc12b924f2f9"
+              "height": 800
             },
             {
               "_$id": "6mkktp79",
               "_$type": "Box",
-              "name": "Box",
+              "name": "FrostedGlass",
               "width": 460,
               "height": 800,
               "alpha": 0.85,

@@ -5,8 +5,11 @@ const { regClass, property } = Laya;
 @regClass()
 export class VideoSceneManager extends Laya.Script {
     declare owner: Laya.Scene;
+    /** 视频节点 */
     private _video: Laya.VideoNode;
+    /** 左上角广告后面的文本信息 */
     private _info: Laya.Text;
+    /** 倒计时的数字 */
     private _countTime: number;
     /** 控制定时器 */
     private _timer: number;
@@ -14,23 +17,27 @@ export class VideoSceneManager extends Laya.Script {
     private _frostedGlass: Laya.Box;
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
+        this.owner.visible = false;
         this._video = (this.owner.getChildByName("Video") as Laya.VideoNode) || Assert.ChildNotNull;
         const TopLeft = (this.owner.getChildByName("TopLeft") as Laya.Image) || Assert.ChildNotNull;
         const TopLeftRect = (TopLeft.getChildByName("Rect") as Laya.Sprite) || Assert.ChildNotNull;
         this._info = (TopLeftRect.getChildByName("info") as Laya.Text) || Assert.ChildNotNull;
         const RightLeft = (this.owner.getChildByName("RightLeft") as Laya.Sprite) || Assert.ChildNotNull;
         RightLeft.on(Laya.Event.CLICK, () => {
-            this._video.pause();
+            if (this._video) {
+                this._video.pause();
+            }
             clearInterval(this._timer);
             this.owner.visible = false;
         });
         this._frostedGlass = (this.owner.getChildByName("FrostedGlass") as Laya.Box) || Assert.ChildNotNull;
     }
-    public showVideo(awardCallback?: Function) {
+    public showVideo(awardCallback: Function) {
         this._frostedGlass.visible = false;
         this._info.text = `倒计时${30}秒`;
         this.owner.visible = true;
-        Laya.loader.load("./resources/videos/1.mp4").then(() => {
+        Laya.loader.load("./resources/videos/1.mp4").then((args) => {
+            this._video.source = args.url;
             this._video.reload();
             this._video.play();
             this._video.loop = true;
@@ -45,6 +52,7 @@ export class VideoSceneManager extends Laya.Script {
                     this._frostedGlass.visible = true;
                     // 去获得奖励
                     awardCallback && awardCallback();
+                    this._video.removeSelf();
                 }
             }, 1000);
         });
@@ -52,7 +60,9 @@ export class VideoSceneManager extends Laya.Script {
     //组件被启用后执行，例如节点被添加到舞台后
     //onEnable(): void {}
     //组件被禁用时执行，例如从节点从舞台移除后
-    //onDisable(): void {}
+    onDisable(): void {
+        this._video.source = "";
+    }
     //第一次执行update之前执行，只会执行一次
     //onStart(): void {}
     //手动调用节点销毁时执行

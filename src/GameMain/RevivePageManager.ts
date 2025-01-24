@@ -1,5 +1,6 @@
 import { Assert } from "../utils/Assert";
 import { VideoSceneManager } from "../VideoScene/VideoSceneManager";
+import { BoxManager } from "./BoxManager";
 import { GameOverManager } from "./GameOverManager";
 
 const { regClass, property } = Laya;
@@ -20,6 +21,8 @@ export class RevivePageManager extends Laya.Script {
         const RefuseButton = Background.getChildByName("RefuseButton") || Assert.ChildNotNull;
         const GameOver = (GameBackground.getChildByName("GameOver") as Laya.Box) || Assert.ChildNotNull;
         const VideoScene = (GameBackground.getChildByName("VideoScene") as Laya.Box) || Assert.ChildNotNull;
+        const Box = (GameBackground.getChildByName("Box") as Laya.Sprite) || Assert.ChildNotNull;
+        const BoxManagerScript = Box.getComponent(BoxManager) || Assert.ComponentNotNull;
         this._videoSceneManage = VideoScene.getComponent(VideoSceneManager) || Assert.ComponentNotNull;
         this._gameOverManager = GameOver.getComponent(GameOverManager) || Assert.ComponentNotNull;
         CloseButton.on(Laya.Event.CLICK, () => {
@@ -29,9 +32,12 @@ export class RevivePageManager extends Laya.Script {
             this._gameOver();
         });
         VideoButton.on(Laya.Event.CLICK, () => {
-            console.log("跳转到视频页面");
             // 跳转到视频页面
-            this._videoSceneManage.showVideo();
+            this._videoSceneManage.showVideo(() => {
+                // 调用移除逻辑
+                BoxManagerScript.pushBox();
+                this.owner.visible = false;
+            });
         });
     }
     public showReviePage(): void {

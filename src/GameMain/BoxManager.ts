@@ -15,9 +15,13 @@ export class BoxManager extends Laya.Script {
     private _boxList: good[] = [];
     /** 控制消除物品的管理类 */
     private _GoodsManager: GoodsManager;
+    /** 挂载被放在卡槽中的卡牌 */
     private _Choosed: Laya.Sprite;
+    /** 游戏进度控制管理脚本 */
     private _gameMainManager: GameMainManager;
+    /** 游戏结束管理脚本 */
     private _gameOverManager: GameOverManager;
+    /** 可以复活的次数 */
     private _canReviveNumbers: number = 1;
     private _revivePageManager: RevivePageManager;
     private _pushCount: number = 0;
@@ -47,6 +51,7 @@ export class BoxManager extends Laya.Script {
             if (this._canReviveNumbers > 0) {
                 // 去调用显示选择复活的页面
                 this._revivePageManager.showReviePage();
+                this._canReviveNumbers--;
             } else {
                 this._gameOverManager.cardSlotFull();
             }

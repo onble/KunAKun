@@ -1,3 +1,4 @@
+import { GameDate } from "../Instance/GameDate";
 import { Assert } from "../utils/Assert";
 import { GameMainManager } from "./GameMainManager";
 
@@ -6,10 +7,15 @@ const { regClass, property } = Laya;
 @regClass()
 export class GameOverManager extends Laya.Script {
     declare owner: Laya.Box;
+    /** 中间的元素的背景 */
     private _LevelUpBackground: Laya.Image;
+    /** 黑色背景 */
     private _blackBackground: Laya.Box;
+    /** 按钮组容器 */
     private _ButtonGroup: Laya.Box;
     private _gameMainManager: GameMainManager;
+    /** 白字小标题 */
+    private _LittleTitle: Laya.Text;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
@@ -19,25 +25,30 @@ export class GameOverManager extends Laya.Script {
         this._LevelUpBackground = (this.owner.getChildByName("LevelUpBackground") as Laya.Image) || Assert.ChildNotNull;
         this._blackBackground = (this.owner.getChildByName("blackBackground") as Laya.Box) || Assert.ChildNotNull;
         this._ButtonGroup = (this.owner.getChildByName("ButtonGroup") as Laya.Box) || Assert.ChildNotNull;
+        this._LittleTitle = (this._LevelUpBackground.getChildByName("LittleTitle") as Laya.Text) || Assert.ChildNotNull;
         // 监听鼠标事件，防止点击到下面的元素
         this._blackBackground.on(Laya.Event.CLICK, this, (event: Laya.Event) => {
             // 阻止事件继续冒泡
             event.stopPropagation();
         });
         const Reset = (this._ButtonGroup.getChildByName("Reset") as Laya.Image) || Assert.ChildNotNull;
-        Reset.on(Laya.Event.CLICK, this, () => {
+        Reset.on(Laya.Event.CLICK, this, (event: Laya.Event) => {
+            event.stopPropagation();
             // 重新加载游戏界面即可完成重置的逻辑
             Laya.Scene.open("./Scenes/GameMain.ls", true);
         });
         const BackHome = (this._ButtonGroup.getChildByName("BackHome") as Laya.Image) || Assert.ChildNotNull;
-        BackHome.on(Laya.Event.CLICK, this, () => {
+        BackHome.on(Laya.Event.CLICK, this, (event: Laya.Event) => {
+            event.stopPropagation();
             Laya.Scene.open("./Scenes/GameHome.ls", true);
         });
     }
+    /** 因为卡槽满了而游戏结束 */
     public cardSlotFull() {
         this._LevelUpBackground.y = 420;
         this._blackBackground.alpha = 0;
         this._ButtonGroup.visible = false;
+        this._LittleTitle.text = `今日已挑战${GameDate.getInstance().incrementPlayTimes()}次`;
         this.owner.visible = true;
         Laya.Tween.to(this._blackBackground, { alpha: 1 }, 500);
         Laya.Tween.to(
