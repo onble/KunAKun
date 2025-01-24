@@ -238,6 +238,19 @@
               }
             },
             {
+              "_$id": "pdbprslu",
+              "_$type": "Sprite",
+              "name": "card(11)",
+              "x": 130,
+              "y": 430,
+              "width": 60,
+              "height": 66,
+              "texture": {
+                "_$uuid": "56896809-662a-488d-9e83-ba42427083d5",
+                "_$type": "Texture"
+              }
+            },
+            {
               "_$id": "0jcp5bp9",
               "_$type": "Sprite",
               "name": "card(8)",
@@ -422,6 +435,61 @@
                   "_$child": [
                     {
                       "_$id": "9n9tbx81",
+                      "_$type": "Text",
+                      "name": "dotNumber",
+                      "x": 1,
+                      "width": 30,
+                      "height": 30,
+                      "text": "99",
+                      "fontSize": 18,
+                      "color": "#FFFFFF",
+                      "align": "center",
+                      "valign": "middle",
+                      "leading": 2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_$id": "lw1hz7ap",
+              "_$type": "Image",
+              "name": "Back",
+              "x": 305,
+              "y": -3,
+              "width": 85,
+              "height": 74,
+              "skin": "res://1e414e55-be9c-4e05-8b98-307947bde062",
+              "color": "#ffffff",
+              "_$child": [
+                {
+                  "_$id": "c8x9y2yk",
+                  "_$type": "Sprite",
+                  "name": "Icon",
+                  "x": 15,
+                  "y": 5,
+                  "width": 51.5,
+                  "height": 51.5,
+                  "texture": {
+                    "_$uuid": "1294a34b-6255-4b53-afa4-bb0fe4fb45df",
+                    "_$type": "Texture"
+                  }
+                },
+                {
+                  "_$id": "b81n3148",
+                  "_$type": "Sprite",
+                  "name": "Dot",
+                  "x": 68,
+                  "y": -8,
+                  "width": 30,
+                  "height": 30,
+                  "texture": {
+                    "_$uuid": "d45d490c-dd32-46d8-bc7d-9fbed0a58da1",
+                    "_$type": "Texture"
+                  },
+                  "_$child": [
+                    {
+                      "_$id": "obstrgzz",
                       "_$type": "Text",
                       "name": "dotNumber",
                       "x": 1,

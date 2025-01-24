@@ -13,6 +13,9 @@ export class GoodsManager extends Laya.Script {
     private _ButtonManager: ButtonManager;
     private _BoxManger: BoxManager;
     private _isPlayingAnimation: boolean = false;
+    private _backGoodInfo: { good: Good; lineIndex: number } = null;
+    private _backGoodCoverInfo: { line: number; row: number; good: Good }[] = [];
+    private _stopClick: boolean = false;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
@@ -74,7 +77,7 @@ export class GoodsManager extends Laya.Script {
                         }
                         newCard.on(Laya.Event.CLICK, (event: Laya.Event) => {
                             event.stopPropagation();
-                            if (!goods.canClick) {
+                            if (!goods.canClick || this._stopClick) {
                                 return;
                             }
                             if (this._BoxManger.canAddMore()) {
@@ -135,7 +138,7 @@ export class GoodsManager extends Laya.Script {
                 }
                 newCard.on(Laya.Event.CLICK, (event: Laya.Event) => {
                     event.stopPropagation();
-                    if (!goods.canClick) {
+                    if (!goods.canClick || this._stopClick) {
                         return;
                     }
                     if (this._BoxManger.canAddMore()) {
@@ -219,7 +222,7 @@ export class GoodsManager extends Laya.Script {
                         }
                         newCard.on(Laya.Event.CLICK, (event: Laya.Event) => {
                             event.stopPropagation();
-                            if (!goods.canClick) {
+                            if (!goods.canClick || this._stopClick) {
                                 return;
                             }
                             if (this._BoxManger.canAddMore()) {
@@ -246,6 +249,8 @@ export class GoodsManager extends Laya.Script {
         }
     }
     private _showCoverGoods(selectGoods: Good, index: number[]) {
+        this._backGoodInfo = { good: selectGoods, lineIndex: index[0] };
+        this._backGoodCoverInfo = [];
         const line = index[0];
         // 如果是这最后一层，也就是底层，就不要判断了
         if (line !== 0) {
@@ -295,6 +300,12 @@ export class GoodsManager extends Laya.Script {
                 }
                 // 展示图片
                 if (currentCoverGoods) {
+                    // 将展示的图片信息进行记录
+                    this._backGoodCoverInfo.push({
+                        line: nextIndex,
+                        row: coverGoods[i].row,
+                        good: this._goodsList[nextIndex][coverGoods[i].row],
+                    });
                     this._goodsList[nextIndex][coverGoods[i].row].canClick = true;
                 }
             }
@@ -335,6 +346,30 @@ export class GoodsManager extends Laya.Script {
         this._goodsList.push(goods);
 
         callBack && callBack();
+        this._draw();
+    }
+    public checkSameBackGood(good: Good): boolean {
+        if (good.name === this._backGoodInfo.good.name) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public backGoodFirst() {
+        this._stopClick = true;
+        // 将原本被允许点击的卡牌改为不允许点击
+        for (let i = 0; i < this._backGoodCoverInfo.length; i++) {
+            this._goodsList[this._backGoodCoverInfo[i].line][this._backGoodCoverInfo[i].row].canClick = false;
+        }
+        this._draw();
+    }
+    public backGoodSecond() {
+        // 将记录的撤回卡牌添加回列表中
+        this._goodsList[this._backGoodInfo.lineIndex].push(this._backGoodInfo.good);
+        // 将撤回卡牌的数据进行抹除
+        this._backGoodCoverInfo = [];
+        this._backGoodInfo = null;
+        this._stopClick = false;
         this._draw();
     }
 

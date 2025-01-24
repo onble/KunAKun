@@ -38,6 +38,11 @@ export class ButtonManager extends Laya.Script {
             if (!this._boxManager.canPushBox()) return;
             this._boxManager.pushBox();
         });
+        const Back = (this.owner.getChildByName("Back") as Laya.Image) || Assert.ChildNotNull;
+        Back.on(Laya.Event.CLICK, this, () => {
+            if (!this._boxManager.canBackBox()) return;
+            this._boxManager.backBox();
+        });
     }
 
     //组件被启用后执行，例如节点被添加到舞台后

@@ -21,6 +21,7 @@ export class BoxManager extends Laya.Script {
     private _canReviveNumbers: number = 1;
     private _revivePageManager: RevivePageManager;
     private _pushCount: number = 0;
+    private _backGoodInfo: good = null;
 
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake(): void {
@@ -61,6 +62,7 @@ export class BoxManager extends Laya.Script {
                     pushIndex = i + 1;
                 }
             }
+            this._backGoodInfo = goods;
             // 创建一个新的卡牌，然后移动到木栏中
             const newGood = new Laya.Sprite();
             newGood.x = goods.x;
@@ -95,6 +97,7 @@ export class BoxManager extends Laya.Script {
                 null,
                 new Laya.Handler(this, () => {
                     if (count == 2) {
+                        this._backGoodInfo = null;
                         let card1 = this._Choosed.getChildByName(`${goods.name}1`) as Laya.Sprite;
                         let card2 = this._Choosed.getChildByName(`${goods.name}2`) as Laya.Sprite;
                         let card3 = this._Choosed.getChildByName(`${goods.name}3`) as Laya.Sprite;
@@ -109,7 +112,9 @@ export class BoxManager extends Laya.Script {
                             const DisappearAnimationControl =
                                 DisappearAnimationSprite.getComponent(DisappearAnimation) || Assert.ComponentNotNull;
                             DisappearAnimationSprite.y = 563;
-                            DisappearAnimationControl.showDisappearAnimation(card1.x);
+                            DisappearAnimationControl.showDisappearAnimation(card1.x, () => {
+                                DisappearAnimationSprite.removeSelf();
+                            });
                         });
                         // 将右边的向左移动
                         for (let i = this._boxList.length - 1; i > pushIndex - 2; i--) {
@@ -177,6 +182,9 @@ export class BoxManager extends Laya.Script {
         let result: good[] = [];
         if (!this.canPushBox()) {
             return result;
+        }
+        if (this._boxList.length <= 3) {
+            this._backGoodInfo = null;
         }
         // 将左边的三个卡牌移动到中间
         const good1 = (this._Choosed.getChildByName(`${this._boxList[0].name}1`) as Laya.Sprite) || Assert.ChildNotNull;
@@ -315,6 +323,51 @@ export class BoxManager extends Laya.Script {
 
         this._pushCount++;
         return result;
+    }
+    public canBackBox(): boolean {
+        // console.log("this._backGoodInfo", this._backGoodInfo);
+        // console.log(
+        //     "this._GoodsManager.checkSameBackGood(this._backGoodInfo)",
+        //     this._GoodsManager.checkSameBackGood(this._backGoodInfo)
+        // );
+        if (this._backGoodInfo && this._GoodsManager.checkSameBackGood(this._backGoodInfo)) {
+            // console.log("true");
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public backBox() {
+        console.log("backBox");
+        if (!this.canBackBox() || !this._GoodsManager.checkSameBackGood(this._backGoodInfo)) {
+            return;
+        }
+        // 获取对象，然后进行移动
+        let backItem = this._Choosed.getChildByName(`${this._backGoodInfo.name}2`) as Laya.Sprite;
+        if (!backItem) {
+            backItem = this._Choosed.getChildByName(`${this._backGoodInfo.name}1`) as Laya.Sprite;
+        }
+        this._GoodsManager.backGoodFirst();
+        // 从后向前检查在数据列表中找到进行删除
+        for (let i = this._boxList.length - 1; i >= 0; i--) {
+            if (this._boxList[i].name === this._backGoodInfo.name) {
+                this._boxList.splice(i, 1);
+                break;
+            }
+        }
+        Laya.Tween.to(
+            backItem,
+            { x: this._backGoodInfo.x, y: this._backGoodInfo.y },
+            100,
+            null,
+            Laya.Handler.create(this, () => {
+                // 将能够返回的数据进行清除
+                this._backGoodInfo = null;
+                // 将移动的对象隐藏，在good节点中从新渲染
+                this._GoodsManager.backGoodSecond();
+                backItem.removeSelf();
+            })
+        );
     }
     //组件被启用后执行，例如节点被添加到舞台后
     //onEnable(): void {}
