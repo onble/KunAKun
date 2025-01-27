@@ -1,3 +1,7 @@
 {
-  "name": "KunAKun"
+  "name": "KunAKun",
+  "startupScene": "res://768067be-4cd2-4c81-89a1-b4f1750277ee",
+  "includedScenes": [
+    "res://13bda9ec-1785-4f0a-b32a-4b80947b7316"
+  ]
 }

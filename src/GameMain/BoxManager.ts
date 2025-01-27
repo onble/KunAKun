@@ -1,3 +1,4 @@
+import { MusicManager } from "../Instance/MusicManager";
 import { Assert } from "../utils/Assert";
 import { DisappearAnimation } from "./DisappearAnimation";
 import { GameMainManager } from "./GameMainManager";
@@ -58,6 +59,7 @@ export class BoxManager extends Laya.Script {
             // TODO:直接进行失败处理
             // return false;
         } else {
+            MusicManager.getInstance().playBasketballSound();
             let count = 0;
             let pushIndex = 0;
             // 在存储的数据中找看是否有相同的卡牌

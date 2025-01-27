@@ -1,3 +1,4 @@
+import { GameDate } from "../Instance/GameDate";
 import { Assert } from "../utils/Assert";
 
 const { regClass, property } = Laya;
@@ -50,6 +51,8 @@ export class GameWinManager extends Laya.Script {
     }
     public showGameWin() {
         this.owner.visible = true;
+        // 通知游戏数据记录通关
+        GameDate.getInstance().setIsPass(true);
         this._showChickenAnimation();
     }
 

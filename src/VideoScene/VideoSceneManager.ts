@@ -1,3 +1,4 @@
+import { MusicManager } from "../Instance/MusicManager";
 import { Assert } from "../utils/Assert";
 
 const { regClass, property } = Laya;
@@ -29,14 +30,23 @@ export class VideoSceneManager extends Laya.Script {
             }
             clearInterval(this._timer);
             this.owner.visible = false;
+            MusicManager.getInstance().musicContinue();
         });
         this._frostedGlass = (this.owner.getChildByName("FrostedGlass") as Laya.Box) || Assert.ChildNotNull;
     }
+    private _randomVideoSource(): string {
+        const list: string[] = ["./resources/videos/1.mp4", "./resources/videos/2.mp4"];
+        // 生成一个 0 到 list.length - 1 之间的随机整数作为索引
+        const randomIndex = Math.floor(Math.random() * list.length);
+        // 根据随机索引从数组中获取元素
+        return list[randomIndex];
+    }
     public showVideo(awardCallback: Function) {
+        MusicManager.getInstance().musicPause();
         this._frostedGlass.visible = false;
         this._info.text = `倒计时${30}秒`;
         this.owner.visible = true;
-        Laya.loader.load("./resources/videos/1.mp4").then((args) => {
+        Laya.loader.load(this._randomVideoSource()).then((args) => {
             this._video.source = args.url;
             this._video.reload();
             this._video.play();

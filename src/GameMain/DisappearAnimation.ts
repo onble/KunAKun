@@ -1,3 +1,4 @@
+import { MusicManager } from "../Instance/MusicManager";
 import { Assert } from "../utils/Assert";
 
 const { regClass, property } = Laya;
@@ -16,6 +17,7 @@ export class DisappearAnimation extends Laya.Script {
         this._Card3 = (this.owner.getChildByName("Card3") as Laya.Sprite) || Assert.ChildNotNull;
     }
     public showDisappearAnimation(x: number, callBack?: Function) {
+        // MusicManager.getInstance().playYesSound();
         this.owner.x = x;
         this.owner.visible = true;
         this._showCardDisapperAnimation(this._Card1);
