@@ -2,6 +2,10 @@
 temp
 library
 local
-release
+release/*
+!release/web/
+release/android/*
+!release/android
+!release/android/*.apk
 node_modules
 bin/js/bundles
